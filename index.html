@@ -81,24 +81,57 @@
 <section id="gallery">
   <h2>Gallery</h2>
   <div class="carousel-container"
-       style="position:relative; max-width:800px; height:450px; margin:auto; overflow:hidden; touch-action: pan-y;">
+       style="position:relative;
+              max-width:800px;
+              height:450px;
+              margin:auto;
+              overflow:hidden;
+              touch-action: pan-y;">
     <div class="carousel-track"
-         style="display:flex; transition:transform 0.5s ease; height:100%;">
+         style="display:flex;
+                transition:transform 0.5s ease;
+                height:100%;">
       <img class="carousel-item" src="images/before.png" alt="Before"
-           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
+           style="flex:0 0 400px;
+                  height:100%;
+                  object-fit:cover;
+                  margin:0 10px;
+                  transition:transform 0.5s, opacity 0.5s;">
       <img class="carousel-item" src="images/mid.png" alt="Mid"
-           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
+           style="flex:0 0 400px;
+                  height:100%;
+                  object-fit:cover;
+                  margin:0 10px;
+                  transition:transform 0.5s, opacity 0.5s;">
       <img class="carousel-item" src="images/after.png" alt="After"
-           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
+           style="flex:0 0 400px;
+                  height:100%;
+                  object-fit:cover;
+                  margin:0 10px;
+                  transition:transform 0.5s, opacity 0.5s;">
     </div>
     <button id="prev"
-            style="position:absolute;top:50%;left:10px;transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
-                   border-radius:50%;cursor:pointer;z-index:2;">&#10094;</button>
+            style="position:absolute;
+                   top:50%;
+                   left:10px;
+                   transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5);
+                   color:white;
+                   border:none;
+                   padding:12px;
+                   border-radius:50%;
+                   cursor:pointer;z-index:2;">&#10094;</button>
     <button id="next"
-            style="position:absolute;top:50%;right:10px;transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
-                   border-radius:50%;cursor:pointer;z-index:2;">&#10095;</button>
+            style="position:absolute;
+                   top:50%;
+                   right:10px;
+                   transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5);
+                   color:white;
+                   border:none;
+                   padding:12px;
+                   border-radius:50%;
+                   cursor:pointer;z-index:2;">&#10095;</button>
   </div>
 </section>
 
@@ -127,23 +160,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  prev.addEventListener('click', () => { idx = idx === 0 ? items.length - 1 : idx - 1; update(); });
-  next.addEventListener('click', () => { idx = idx === items.length - 1 ? 0 : idx + 1; update(); });
+  prev.addEventListener('click', () => { idx = idx===0?items.length-1:idx-1; update() });
+  next.addEventListener('click', () => { idx = idx===items.length-1?0:idx+1; update() });
 
   // Swipe support
   let startX = 0;
   const container = document.querySelector('.carousel-container');
-  container.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+  container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
   container.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (dx > 40)  prev.click();
     if (dx < -40) next.click();
   });
 
-  // initialize
   update();
 });
 </script>
+
 
   <section id="contact">
     <h2>Contact Us</h2>
