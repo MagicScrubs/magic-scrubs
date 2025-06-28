@@ -78,14 +78,40 @@
     </div>
   </section>
 
-  <section id="gallery">
-    <h2>Before & After Gallery</h2>
-    <div class="gallery">
-      <div class="card"><img src="https://via.placeholder.com/300x180?text=Before+%2F+After+1"><p>Interior Deep Clean</p></div>
-      <div class="card"><img src="https://via.placeholder.com/300x180?text=Before+%2F+After+2"><p>Exterior Polish</p></div>
-      <div class="card"><img src="https://via.placeholder.com/300x180?text=Before+%2F+After+3"><p>Full Detail</p></div>
-    </div>
-  </section>
+  <<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="slider-container" style="position:relative; max-width:700px; margin:auto;">
+    <img id="slide" src="images/before.png" style="width:100%; border-radius:10px;">
+    <button id="prev"
+            style="position:absolute;top:50%;left:10px;transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
+                   cursor:pointer;border-radius:50%;">&#10094;</button>
+    <button id="next"
+            style="position:absolute;top:50%;right:10px;transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
+                   cursor:pointer;border-radius:50%;">&#10095;</button>
+  </div>
+  <script>
+    (function(){
+      const images = [
+        'images/before.png',
+        'images/mid.png',
+        'images/after.png'
+      ];
+      let idx = 0;
+      const slide = document.getElementById('slide');
+      document.getElementById('prev').onclick = () => {
+        idx = (idx === 0 ? images.length - 1 : idx - 1);
+        slide.src = images[idx];
+      };
+      document.getElementById('next').onclick = () => {
+        idx = (idx === images.length - 1 ? 0 : idx + 1);
+        slide.src = images[idx];
+      };
+    })();
+  </script>
+</section>
+
 
   <section id="contact">
     <h2>Contact Us</h2>
