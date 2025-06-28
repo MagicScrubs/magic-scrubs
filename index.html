@@ -1,84 +1,112 @@
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Magic Scrubs - Mobile Car Detailing</title>
+  <!-- … your existing meta & title … -->
   <style>
+    /* GLOBAL RESET & SMOOTH SCROLL */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: 'Segoe UI', sans-serif; color: #222; background: #f5faff; }
-    header {
-      background: linear-gradient(to right, #007bff, #00a8ff);
-      color: white; text-align: center; padding: 80px 20px;
-    }
-    header h1 { font-size: 48px; margin-bottom: 10px; }
-    header p { font-size: 20px; margin-bottom: 30px; }
+    body { font-family: 'Segoe UI', sans-serif; background: #eef4fc; color: #222; }
+
+    /* NAVBAR */
     nav {
-      background: white; position: sticky; top: 0; display: flex; justify-content: center;
-      gap: 20px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); z-index: 1000;
+      position: sticky; top: 0; background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(6px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem 0; z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background 0.3s;
     }
-    nav a { color: #007bff; text-decoration: none; font-weight: bold; }
-    section { max-width: 1100px; margin: auto; padding: 60px 20px; }
-    .services, .gallery {
-      display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;
+    nav.scrolled { background: #007bff; }
+    nav a {
+      color: #007bff; text-decoration: none; font-weight: 600;
+      transition: color 0.3s;
     }
+    nav.scrolled a { color: #fff; }
+    nav a:hover { color: #0056b3; }
+
+    /* HEADER */
+    header {
+      text-align: center; padding: 6rem 1rem;
+      background: linear-gradient(120deg, #007bff, #00cfff);
+      color: #fff;
+    }
+    header h1 { font-size: 3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    header p { font-size: 1.25rem; margin: .5rem 0; }
+
+    /* SECTION TITLES */
+    section h2 {
+      font-size: 2rem; text-align: center;
+      margin-bottom: 1rem; color: #0056b3;
+      position: relative;
+    }
+    section h2::after {
+      content: ''; display: block; width: 60px; height: 4px;
+      background: #00cfff; margin: .5rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* SERVICES */
+    .services { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
     .card {
-      background: white; padding: 20px; border-radius: 10px;
-      flex: 1 1 300px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center;
+      background: #fff; padding: 2rem; border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      width: 280px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0; transform: translateY(20px);
     }
-    .card img {
-      width: 100%; border-radius: 8px; margin-bottom: 10px;
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
-    footer {
-      background: #eee; text-align: center; padding: 40px 20px;
-      font-size: 14px; color: #555;
+    .card h3 { color: #007bff; margin-bottom: .5rem; }
+    .card p { font-size: .95rem; color: #555; }
+
+    /* CAROUSEL (Gallery) */
+    /* keep your existing .carousel-container/.carousel-track/.carousel-item/.frame CSS */
+    /* just add fade-in when each slide becomes active: */
+    .frame {
+      transition: box-shadow 0.5s;
     }
+    .frame.active {
+      box-shadow: 0 0 30px 5px rgba(0, 204, 255, 0.5);
+    }
+
+    /* CONTACT BUTTONS */
+    .button {
+      display: inline-block; background: #007bff; color: #fff;
+      padding: .75rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .button:hover {
+      background: #0056b3; transform: translateY(-3px);
+    }
+
+    /* FOOTER */
+    footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
+
+    /* UTILITY: Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
+  <!-- … your existing nav/header … -->
 
-  <header>
-    <h1>Magic Scrubs</h1>
-    <p>Mobile Car Detailing • Sacramento Area</p>
-    <a href="#contact" style="color:white; background:#000; padding:10px 20px; border-radius:5px; text-decoration:none;">Book Now</a>
-  </header>
-
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <section id="about">
+  <section id="about" class="reveal">
     <h2>About Us</h2>
-    <p>
-      At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your driveway.
-      Our team takes pride in restoring the shine and freshness of your vehicle — inside and out.
-      Whether you drive daily or occasionally, Magic Scrubs ensures your ride looks brand new again.
-    </p>
+    <!-- … -->
   </section>
 
-  <section id="services">
+  <section id="services" class="reveal">
     <h2>Our Services</h2>
     <div class="services">
-      <div class="card">
-        <h3>Full Detail</h3>
-        <p>Complete inside and out service: vacuum, wash, wax, and polish.</p>
-      </div>
-      <div class="card">
-        <h3>Deep Clean</h3>
-        <p>Perfect for neglected interiors. We tackle stains, pet hair, and odors.</p>
-      </div>
-      <div class="card">
-        <h3>Exterior Wash & Wax</h3>
-        <p>Foam cannon hand wash, wheel shine, and protective wax coat.</p>
-      </div>
+      <div class="card"><h3>Full Detail</h3><p>…</p></div>
+      <div class="card"><h3>Deep Clean</h3><p>…</p></div>
+      <div class="card"><h3>Wash & Wax</h3><p>…</p></div>
     </div>
   </section>
 
-<section id="gallery">
+  <section id="gallery">
   <h2>Gallery</h2>
   <div class="carousel-container">
     <div class="carousel-track">
@@ -225,20 +253,33 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 
-
-
-  <section id="contact">
+  <section id="contact" class="reveal">
     <h2>Contact Us</h2>
-    <p style="font-size: 18px;">
-      📞 (916) 288-7605<br>
-      📞 (279) 248-6510<br>
-      ✉️ Email: magic@scrubsdetail.com<br>
-    </p>
+    <a href="tel:9162887605" class="button">Call 916-288-7605</a>
   </section>
 
-  <footer>
-    &copy; 2025 Magic Scrubs Detailing. All rights reserved.
+  <footer class="reveal">
+    © 2025 Magic Scrubs. All rights reserved.
   </footer>
 
+  <script>
+    // SCROLL REVEAL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('active');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    reveals.forEach(r => observer.observe(r));
+
+    // NAVBAR TRANSPARENT→SOLID ON SCROLL
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  </script>
 </body>
-</html>
