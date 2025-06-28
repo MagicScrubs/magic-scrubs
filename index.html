@@ -89,70 +89,63 @@
               touch-action: pan-y;">
     <div class="carousel-track"
          style="display:flex;
-                transition:transform 0.5s ease;
-                height:100%;">
+                align-items:center;
+                height:100%;
+                transition:transform 0.5s ease;">
       <!-- Slide 1 -->
       <img class="carousel-item" src="images/before.png" alt="Before"
-           style="flex:0 0 400px;
+           style="flex:0 0 auto;
                   height:100%;
+                  width:auto;
                   object-fit:cover;
                   margin:0 10px;
                   border-radius:10px;
-                  transition:transform 0.5s, opacity 0.5s;">
+                  transition: transform 0.5s, opacity 0.5s;">
       <!-- Slide 2 -->
       <img class="carousel-item" src="images/after.png" alt="After"
-           style="flex:0 0 400px;
+           style="flex:0 0 auto;
                   height:100%;
+                  width:auto;
                   object-fit:cover;
                   margin:0 10px;
                   border-radius:10px;
-                  transition:transform 0.5s, opacity 0.5s;">
+                  transition: transform 0.5s, opacity 0.5s;">
       <!-- Slide 3 -->
-      <img class="carousel-item" src="images/foam-corvette.jpeg" alt="Foam Corvette"
-           style="flex:0 0 400px;
+      <img class="carousel-item" src="images/IMG_5794.jpeg" alt="Foam Corvette"
+           style="flex:0 0 auto;
                   height:100%;
+                  width:auto;
                   object-fit:cover;
                   margin:0 10px;
                   border-radius:10px;
-                  transition:transform 0.5s, opacity 0.5s;">
+                  transition: transform 0.5s, opacity 0.5s;">
       <!-- Slide 4 -->
-      <img class="carousel-item" src="images/green-corvette.jpeg" alt="Green Corvette"
-           style="flex:0 0 400px;
+      <img class="carousel-item" src="images/IMG_5811.jpeg" alt="Green Corvette"
+           style="flex:0 0 auto;
                   height:100%;
+                  width:auto;
                   object-fit:cover;
                   margin:0 10px;
                   border-radius:10px;
-                  transition:transform 0.5s, opacity 0.5s;">
+                  transition: transform 0.5s, opacity 0.5s;">
     </div>
 
     <button id="prev"
             style="position:absolute;
-                   top:50%;
-                   left:10px;
-                   transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);
-                   color:white;
-                   border:none;
-                   padding:12px;
-                   border-radius:50%;
-                   cursor:pointer;
-                   z-index:2;">&#10094;</button>
-
+                   top:50%; left:10px; transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5); color:white; border:none;
+                   padding:12px; border-radius:50%; cursor:pointer; z-index:2;">
+      &#10094;
+    </button>
     <button id="next"
             style="position:absolute;
-                   top:50%;
-                   right:10px;
-                   transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);
-                   color:white;
-                   border:none;
-                   padding:12px;
-                   border-radius:50%;
-                   cursor:pointer;
-                   z-index:2;">&#10095;</button>
+                   top:50%; right:10px; transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5); color:white; border:none;
+                   padding:12px; border-radius:50%; cursor:pointer; z-index:2;">
+      &#10095;
+    </button>
   </div>
 </section>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const track = document.querySelector('.carousel-track');
@@ -162,42 +155,29 @@ document.addEventListener("DOMContentLoaded", () => {
   let idx = 0;
 
   function update() {
-    const cardWidth = items[0].getBoundingClientRect().width + 20;
-    const offset   = -idx * cardWidth + (track.parentElement.clientWidth - cardWidth) / 2;
+    const cardW = items[0].getBoundingClientRect().width + 20;
+    const offset = -idx * cardW + (track.parentElement.clientWidth - cardW)/2;
     track.style.transform = `translateX(${offset}px)`;
-    items.forEach((itm, i) => {
-      if (i === idx) {
-        itm.style.transform = 'scale(1)';
-        itm.style.opacity   = '1';
-        itm.style.zIndex    = '2';
+    items.forEach((itm,i) => {
+      if(i===idx){
+        itm.style.transform='scale(1)'; itm.style.opacity='1'; itm.style.zIndex='2';
       } else {
-        itm.style.transform = 'scale(0.8)';
-        itm.style.opacity   = '0.5';
-        itm.style.zIndex    = '1';
+        itm.style.transform='scale(0.8)'; itm.style.opacity='0.5'; itm.style.zIndex='1';
       }
     });
   }
 
-  prev.addEventListener('click', () => {
-    idx = (idx === 0 ? items.length - 1 : idx - 1);
-    update();
-  });
-  next.addEventListener('click', () => {
-    idx = (idx === items.length - 1 ? 0 : idx + 1);
-    update();
-  });
+  prev.onclick = ()=>{ idx = idx===0?items.length-1:idx-1; update(); };
+  next.onclick = ()=>{ idx = idx===items.length-1?0:idx+1; update(); };
 
-  // Swipe support
-  let startX = 0;
+  let startX=0;
   const container = document.querySelector('.carousel-container');
-  container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-  container.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 40)  prev.click();
-    if (dx < -40) next.click();
+  container.addEventListener('touchstart', e=> startX=e.touches[0].clientX, {passive:true});
+  container.addEventListener('touchend', e=>{
+    const dx=e.changedTouches[0].clientX - startX;
+    if(dx>40) prev.click(); else if(dx<-40) next.click();
   });
 
-  // Initialize
   update();
 });
 </script>
