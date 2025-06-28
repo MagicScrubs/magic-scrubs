@@ -89,20 +89,63 @@
     .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-<body>
-  <!-- … your existing nav/header … -->
-
-  <section id="about" class="reveal">
-    <h2>About Us</h2>
-    <!-- … -->
+  <body>
+  <!-- Hero Banner -->
+  <section id="hero" style="
+      background: url('images/hero-banner.jpg') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    ">
+    <h1 style="font-size:3rem; margin-bottom:0.5rem;">Magic Scrubs Detailing</h1>
+    <p style="font-size:1.25rem; max-width:600px; text-align:center;">
+      Premium mobile car detailing brought right to your driveway in Sacramento.
+    </p>
+    <a href="#contact" class="button" style="margin-top:1.5rem;">Book Now</a>
   </section>
 
-  <section id="services" class="reveal">
-    <h2>Our Services</h2>
-    <div class="services">
-      <div class="card"><h3>Full Detail</h3><p>…</p></div>
-      <div class="card"><h3>Deep Clean</h3><p>…</p></div>
-      <div class="card"><h3>Wash & Wax</h3><p>…</p></div>
+  <!-- Existing About Us -->
+  <section id="about" class="reveal">
+    <h2>About Us</h2>
+    <p>
+      At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your doorstep.
+      Our team takes pride in restoring the shine and freshness of every vehicle — inside and out.
+    </p>
+
+    <!-- New Expanded About Text -->
+    <div style="max-width:800px; margin:2rem auto; line-height:1.6; color:#333;">
+      <h3>What We Do</h3>
+      <p>
+        We offer a full spectrum of services from exterior hand washes and protective wax applications
+        to deep interior shampooing, leather conditioning, and stain removal. Every detail is
+        meticulously cleaned, polished, and protected.
+      </p>
+
+      <h3>Our Goal</h3>
+      <p>
+        To exceed expectations with every service, leaving your vehicle looking—and feeling—brand new.
+        We aim to build lasting relationships by delivering convenience, quality, and care.
+      </p>
+
+      <h3>What Is Car Detailing?</h3>
+      <p>
+        Car detailing is more than a simple car wash. It’s a comprehensive, deep-clean and restoration
+        process that addresses paint imperfections, interior stains, and protective coatings.
+        Detailing preserves your car’s appearance, protects its value, and enhances your driving experience.
+      </p>
+
+      <h3>Why Get Detailing?</h3>
+      <ul style="list-style: disc; margin-left:1.5rem;">
+        <li>Protects paint from environmental damage</li>
+        <li>Removes stubborn stains & odors inside</li>
+        <li>Restores showroom-quality shine</li>
+        <li>Helps maintain resale value</li>
+        <li>Personalized care tailored to your vehicle</li>
+      </ul>
     </div>
   </section>
 
