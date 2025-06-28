@@ -1,5 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- … your existing meta & title … -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magic Scrubs - Mobile Car Detailing</title>
   <style>
     /* GLOBAL RESET & SMOOTH SCROLL */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,6 +36,20 @@
     header h1 { font-size: 3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     header p { font-size: 1.25rem; margin: .5rem 0; }
 
+    /* SECTION WRAPPER & BORDER EFFECT */
+    .section {
+      position: relative;
+      padding: 3rem 1rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: border-color 0.4s ease;
+    }
+    .section.border-visible {
+      border-color: #007bff;
+    }
+
     /* SECTION TITLES */
     section h2 {
       font-size: 2rem; text-align: center;
@@ -44,12 +62,32 @@
       border-radius: 2px;
     }
 
+    /* ABOUT CONTENT */
+    #about .about-content {
+      text-align: left;
+      line-height: 1.6;
+      color: #333;
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 1rem auto 0;
+    }
+    #about .about-content h3 {
+      margin-top: 1.5rem;
+      color: #0056b3;
+      font-size: 1.3rem;
+    }
+    #about .about-content ul {
+      margin: 1rem 0 0 1.5rem;
+      list-style: disc;
+    }
+
     /* SERVICES */
     .services { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
     .card {
       background: #fff; padding: 2rem; border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      width: 280px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;
+      width: 280px; text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
       opacity: 0; transform: translateY(20px);
     }
     .card.visible { opacity: 1; transform: translateY(0); }
@@ -61,14 +99,43 @@
     .card p { font-size: .95rem; color: #555; }
 
     /* CAROUSEL (Gallery) */
-    /* keep your existing .carousel-container/.carousel-track/.carousel-item/.frame CSS */
-    /* just add fade-in when each slide becomes active: */
+    .carousel-container {
+      position: relative; max-width: 800px; height: 450px;
+      margin: auto; overflow: hidden; touch-action: pan-y;
+    }
+    .carousel-track {
+      display: flex; align-items: center; height: 100%;
+      transition: transform 0.5s ease;
+    }
+    .carousel-item { flex: 0 0 auto; margin: 0 10px; }
     .frame {
-      transition: box-shadow 0.5s;
+      position: relative; width: 400px; height: 400px;
+      background: #007bff; border-radius: 15px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s;
     }
-    .frame.active {
-      box-shadow: 0 0 30px 5px rgba(0, 204, 255, 0.5);
+    .frame::before {
+      content: "";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%);
+      z-index: 1;
     }
+    .frame img {
+      position: relative; z-index: 2;
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      display: block; margin: auto;
+    }
+    .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
+
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); color: white; border: none;
+      padding: 12px; border-radius: 50%; cursor: pointer; z-index: 2;
+    }
+    #prev { left: 10px; }
+    #next { right: 10px; }
 
     /* CONTACT BUTTONS */
     .button {
@@ -77,9 +144,7 @@
       text-decoration: none; font-weight: 600;
       transition: background 0.3s, transform 0.3s;
     }
-    .button:hover {
-      background: #0056b3; transform: translateY(-3px);
-    }
+    .button:hover { background: #0056b3; transform: translateY(-3px); }
 
     /* FOOTER */
     footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
@@ -89,57 +154,44 @@
     .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-  <body>
+<body>
+
   <!-- Hero Banner -->
-  <section id="hero" style="
+  <section id="hero" class="section reveal" style="
       background: url('images/hero-banner.jpg') center/cover no-repeat;
-      height: 60vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      height: 60vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     ">
-    <h1 style="font-size:3rem; margin-bottom:0.5rem;">Magic Scrubs Detailing</h1>
-    <p style="font-size:1.25rem; max-width:600px; text-align:center;">
-      Premium mobile car detailing brought right to your driveway in Sacramento.
-    </p>
-    <a href="#contact" class="button" style="margin-top:1.5rem;">Book Now</a>
+    <h1>Magic Scrubs Detailing</h1>
+    <p>Premium mobile car detailing brought right to your driveway in Sacramento.</p>
+    <a href="#contact" class="button">Book Now</a>
   </section>
 
-  <!-- Existing About Us -->
-  <section id="about" class="reveal">
+  <!-- About Us -->
+  <section id="about" class="section reveal">
     <h2>About Us</h2>
-    <p>
-      At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your doorstep.
-      Our team takes pride in restoring the shine and freshness of every vehicle — inside and out.
-    </p>
-
-    <!-- New Expanded About Text -->
-    <div style="max-width:800px; margin:2rem auto; line-height:1.6; color:#333;">
+    <div class="about-content">
+      <p>
+        At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your doorstep.
+        Our team takes pride in restoring the shine and freshness of every vehicle — inside and out.
+      </p>
       <h3>What We Do</h3>
       <p>
         We offer a full spectrum of services from exterior hand washes and protective wax applications
-        to deep interior shampooing, leather conditioning, and stain removal. Every detail is
-        meticulously cleaned, polished, and protected.
+        to deep interior shampooing, leather conditioning, and stain removal.
       </p>
-
       <h3>Our Goal</h3>
       <p>
         To exceed expectations with every service, leaving your vehicle looking—and feeling—brand new.
-        We aim to build lasting relationships by delivering convenience, quality, and care.
       </p>
-
       <h3>What Is Car Detailing?</h3>
       <p>
-        Car detailing is more than a simple car wash. It’s a comprehensive, deep-clean and restoration
-        process that addresses paint imperfections, interior stains, and protective coatings.
-        Detailing preserves your car’s appearance, protects its value, and enhances your driving experience.
+        Car detailing is a comprehensive deep-clean and restoration process that preserves paint,
+        revitalizes interiors, and protects against environmental damage.
       </p>
-
       <h3>Why Get Detailing?</h3>
-      <ul style="list-style: disc; margin-left:1.5rem;">
+      <ul>
         <li>Protects paint from environmental damage</li>
         <li>Removes stubborn stains & odors inside</li>
         <li>Restores showroom-quality shine</li>
@@ -149,159 +201,39 @@
     </div>
   </section>
 
-  <section id="gallery">
-  <h2>Gallery</h2>
-  <div class="carousel-container">
-    <div class="carousel-track">
-      <!-- Slide 1 -->
-      <div class="carousel-item">
-        <div class="frame">
-          <img src="images/before.png" alt="Before">
-        </div>
-      </div>
-      <!-- Slide 2 -->
-      <div class="carousel-item">
-        <div class="frame">
-          <img src="images/after.png" alt="After">
-        </div>
-      </div>
-      <!-- Slide 3 -->
-      <div class="carousel-item">
-        <div class="frame">
-          <img src="images/IMG_5794.jpeg" alt="Foam Corvette">
-        </div>
-      </div>
-      <!-- Slide 4 -->
-      <div class="carousel-item">
-        <div class="frame">
-          <img src="images/IMG_5811.jpeg" alt="Green Corvette">
-        </div>
-      </div>
+  <!-- Services -->
+  <section id="services" class="section reveal">
+    <h2>Our Services</h2>
+    <div class="services">
+      <div class="card"><h3>Full Detail</h3><p>Vacuum, wash, wax, and polish inside & out.</p></div>
+      <div class="card"><h3>Deep Clean</h3><p>Stain removal, shampoo, and odor treatment.</p></div>
+      <div class="card"><h3>Exterior Wash & Wax</h3><p>Foam cannon hand wash with protective sealant.</p></div>
     </div>
-    <button id="prev" class="carousel-btn">&#10094;</button>
-    <button id="next" class="carousel-btn">&#10095;</button>
-  </div>
-</section>
+  </section>
 
-<style>
-.carousel-container {
-  position: relative;
-  max-width: 800px;
-  height: 450px;
-  margin: auto;
-  overflow: hidden;
-  touch-action: pan-y;
-}
-.carousel-track {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  transition: transform 0.5s ease;
-}
-.carousel-item {
-  flex: 0 0 auto;
-  margin: 0 10px;
-}
-.frame {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  background: #007bff;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.frame::before {
-  content: "";
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%);
-  z-index: 1;
-}
-.frame img {
-  position: relative;
-  z-index: 2;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
-  margin: auto;
-}
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 2;
-}
-#prev { left: 10px; }
-#next { right: 10px; }
-</style>
+  <!-- Gallery -->
+  <section id="gallery" class="section reveal">
+    <h2>Gallery</h2>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <!-- Slides -->
+        <div class="carousel-item"><div class="frame"><img src="images/before.png" alt="Before"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/after.png" alt="After"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/IMG_5794.jpeg" alt="Foam Corvette"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/IMG_5811.jpeg" alt="Green Corvette"></div></div>
+      </div>
+      <button id="prev" class="carousel-btn">&#10094;</button>
+      <button id="next" class="carousel-btn">&#10095;</button>
+    </div>
+  </section>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector('.carousel-container');
-  const track     = container.querySelector('.carousel-track');
-  const items     = Array.from(track.children);
-  const prevBtn   = document.getElementById('prev');
-  const nextBtn   = document.getElementById('next');
-  let idx = 0;
-
-  function update() {
-    const parentW = container.clientWidth;
-    const itemW   = items[0].clientWidth;
-    const gap     = 20; // margin-left + margin-right
-    const offset  = (parentW - itemW) / 2 - idx * (itemW + gap);
-    track.style.transform = `translateX(${offset}px)`;
-    items.forEach((itm, i) => {
-      const frame = itm.querySelector('.frame');
-      if (i === idx) {
-        frame.style.transform = 'scale(1)';
-        frame.style.opacity   = '1';
-        frame.style.zIndex    = '2';
-      } else {
-        frame.style.transform = 'scale(0.8)';
-        frame.style.opacity   = '0.5';
-        frame.style.zIndex    = '1';
-      }
-    });
-  }
-
-  prevBtn.addEventListener('click', () => {
-    idx = idx === 0 ? items.length - 1 : idx - 1;
-    update();
-  });
-  nextBtn.addEventListener('click', () => {
-    idx = idx === items.length - 1 ? 0 : idx + 1;
-    update();
-  });
-
-  let startX = 0;
-  container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-  container.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 40) prevBtn.click();
-    if (dx < -40) nextBtn.click();
-  });
-
-  update();
-});
-</script>
-
-
-  <section id="contact" class="reveal">
+  <!-- Contact -->
+  <section id="contact" class="section reveal">
     <h2>Contact Us</h2>
     <a href="tel:9162887605" class="button">Call 916-288-7605</a>
   </section>
 
-  <footer class="reveal">
+  <footer class="section reveal">
     © 2025 Magic Scrubs. All rights reserved.
   </footer>
 
@@ -318,11 +250,55 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.2 });
     reveals.forEach(r => observer.observe(r));
 
-    // NAVBAR TRANSPARENT→SOLID ON SCROLL
+    // BORDER FADE IN/OUT
+    const sections = document.querySelectorAll('.section');
+    const borderObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('border-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(sec => borderObserver.observe(sec));
+
+    // NAVBAR TRANSPARENT→SOLID
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // CAROUSEL LOGIC (unchanged)
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector('.carousel-container');
+      const track     = container.querySelector('.carousel-track');
+      const items     = Array.from(track.children);
+      const prevBtn   = document.getElementById('prev');
+      const nextBtn   = document.getElementById('next');
+      let idx = 0;
+      function update() {
+        const parentW = container.clientWidth;
+        const itemW   = items[0].clientWidth;
+        const gap     = 20;
+        const offset  = (parentW - itemW) / 2 - idx * (itemW + gap);
+        track.style.transform = `translateX(${offset}px)`;
+        items.forEach((itm,i) => {
+          const frame = itm.querySelector('.frame');
+          if (i === idx) {
+            frame.classList.add('active');
+          } else {
+            frame.classList.remove('active');
+          }
+        });
+      }
+      prevBtn.addEventListener('click', () => { idx = idx===0?items.length-1:idx-1; update(); });
+      nextBtn.addEventListener('click', () => { idx = idx===items.length-1?0:idx+1; update(); });
+      let startX = 0;
+      container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+      container.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40) prevBtn.click();
+        if (dx < -40) nextBtn.click();
+      });
+      update();
     });
   </script>
 </body>
+</html>
