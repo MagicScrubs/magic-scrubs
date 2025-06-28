@@ -78,56 +78,77 @@
     </div>
   </section>
 
- <section id="gallery">
+<section id="gallery">
   <h2>Gallery</h2>
-  <div class="slider-container" style="position:relative; max-width:700px; margin:auto; touch-action: pan-y;">
-    <img id="slide" src="images/before.png" style="width:100%; border-radius:10px;">
-    <button id="prev"
-            style="position:absolute;top:50%;left:10px;transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
-                   cursor:pointer;border-radius:50%;">&#10094;</button>
-    <button id="next"
-            style="position:absolute;top:50%;right:10px;transform:translateY(-50%);
-                   background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
-                   cursor:pointer;border-radius:50%;">&#10095;</button>
+  <div class="carousel-container" style="position: relative; max-width: 800px; margin: auto; overflow: hidden; touch-action: pan-y;">
+    <div class="carousel-track" style="display: flex; transition: transform 0.5s ease;">
+      <img class="carousel-item" src="images/before.png" alt="Before">
+      <img class="carousel-item" src="images/mid.png"   alt="Mid">
+      <img class="carousel-item" src="images/after.png" alt="After">
+    </div>
+    <button id="prev" style="position:absolute; top:50%; left:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; padding:12px; border-radius:50%; cursor:pointer;">&#10094;</button>
+    <button id="next" style="position:absolute; top:50%; right:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; padding:12px; border-radius:50%; cursor:pointer;">&#10095;</button>
   </div>
 
   <script>
-    (function(){
-      const images = [
-        'images/before.png',
-        'images/mid.png',
-        'images/after.png'
-      ];
-      let idx = 0;
-      const slide = document.getElementById('slide');
+    (function() {
+      const track = document.querySelector('.carousel-track');
+      const items = Array.from(track.children);
       const prev = document.getElementById('prev');
       const next = document.getElementById('next');
-      const container = document.querySelector('.slider-container');
+      let idx = 0;
 
-      function show(i) {
-        idx = (i + images.length) % images.length;
-        slide.src = images[idx];
+      // Apply initial styles
+      items.forEach((itm, i) => {
+        itm.style.flex = '0 0 60%';
+        itm.style.margin = '0 10px';
+        itm.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      });
+
+      function update() {
+        // center the track
+        const cardWidth = items[0].getBoundingClientRect().width + 20; 
+        track.style.transform = `translateX(${-idx * cardWidth + (track.parentElement.clientWidth - cardWidth) / 2}px)`;
+
+        // scale & fade neighbors
+        items.forEach((itm, i) => {
+          if (i === idx) {
+            itm.style.transform = 'scale(1)';
+            itm.style.opacity   = '1';
+            itm.style.zIndex    = '2';
+          } else {
+            itm.style.transform = 'scale(0.8)';
+            itm.style.opacity   = '0.5';
+            itm.style.zIndex    = '1';
+          }
+        });
       }
 
-      prev.onclick = () => show(idx - 1);
-      next.onclick = () => show(idx + 1);
-
-      // Swipe support
-      let startX = 0;
-      container.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-      }, {passive: true});
-
-      container.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        const dx = endX - startX;
-        if (dx > 40)      show(idx - 1);  // swipe right
-        else if (dx < -40) show(idx + 1);  // swipe left
+      prev.addEventListener('click', () => {
+        idx = (idx === 0 ? items.length - 1 : idx - 1);
+        update();
       });
+      next.addEventListener('click', () => {
+        idx = (idx === items.length - 1 ? 0 : idx + 1);
+        update();
+      });
+
+      // swipe support
+      let startX = 0;
+      const container = document.querySelector('.carousel-container');
+      container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      container.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40)      prev.click();
+        else if (dx < -40) next.click();
+      });
+
+      // kick it off
+      update();
     })();
   </script>
 </section>
+
 
 
 
