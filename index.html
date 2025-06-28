@@ -80,14 +80,25 @@
 
 <section id="gallery">
   <h2>Gallery</h2>
-  <div class="carousel-container" style="position: relative; max-width: 800px; margin: auto; overflow: hidden; touch-action: pan-y;">
-    <div class="carousel-track" style="display: flex; transition: transform 0.5s ease;">
-      <img class="carousel-item" src="images/before.png" alt="Before">
-      <img class="carousel-item" src="images/mid.png"   alt="Mid">
-      <img class="carousel-item" src="images/after.png" alt="After">
+  <div class="carousel-container" 
+       style="position:relative; max-width:800px; height:450px; margin:auto; overflow:hidden; touch-action: pan-y;">
+    <div class="carousel-track" 
+         style="display:flex; transition:transform 0.5s ease; height:100%;">
+      <img class="carousel-item" src="images/before.png" alt="Before"
+           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
+      <img class="carousel-item" src="images/mid.png" alt="Mid"
+           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
+      <img class="carousel-item" src="images/after.png" alt="After"
+           style="flex:0 0 60%; height:100%; object-fit:cover; margin:0 10px; transition:transform 0.5s, opacity 0.5s;">
     </div>
-    <button id="prev" style="position:absolute; top:50%; left:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; padding:12px; border-radius:50%; cursor:pointer;">&#10094;</button>
-    <button id="next" style="position:absolute; top:50%; right:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; padding:12px; border-radius:50%; cursor:pointer;">&#10095;</button>
+    <button id="prev" 
+            style="position:absolute; top:50%; left:10px; transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5); color:white; border:none; padding:12px; 
+                   border-radius:50%; cursor:pointer; z-index:2;">&#10094;</button>
+    <button id="next" 
+            style="position:absolute; top:50%; right:10px; transform:translateY(-50%);
+                   background:rgba(0,0,0,0.5); color:white; border:none; padding:12px;
+                   border-radius:50%; cursor:pointer; z-index:2;">&#10095;</button>
   </div>
 
   <script>
@@ -98,19 +109,9 @@
       const next = document.getElementById('next');
       let idx = 0;
 
-      // Apply initial styles
-      items.forEach((itm, i) => {
-        itm.style.flex = '0 0 60%';
-        itm.style.margin = '0 10px';
-        itm.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-      });
-
       function update() {
-        // center the track
-        const cardWidth = items[0].getBoundingClientRect().width + 20; 
-        track.style.transform = `translateX(${-idx * cardWidth + (track.parentElement.clientWidth - cardWidth) / 2}px)`;
-
-        // scale & fade neighbors
+        const cardWidth = items[0].getBoundingClientRect().width + 20;
+        track.style.transform = \`translateX(\${-idx * cardWidth + (track.parentElement.clientWidth - cardWidth)/2}px)\`;
         items.forEach((itm, i) => {
           if (i === idx) {
             itm.style.transform = 'scale(1)';
@@ -124,30 +125,24 @@
         });
       }
 
-      prev.addEventListener('click', () => {
-        idx = (idx === 0 ? items.length - 1 : idx - 1);
-        update();
-      });
-      next.addEventListener('click', () => {
-        idx = (idx === items.length - 1 ? 0 : idx + 1);
-        update();
-      });
+      prev.onclick = () => { idx = (idx===0?items.length-1:idx-1); update(); };
+      next.onclick = () => { idx = (idx===items.length-1?0:idx+1); update(); };
 
-      // swipe support
+      // swipe
       let startX = 0;
       const container = document.querySelector('.carousel-container');
-      container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
       container.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 40)      prev.click();
-        else if (dx < -40) next.click();
+        if (dx > 40) prev.click();
+        if (dx < -40) next.click();
       });
 
-      // kick it off
       update();
     })();
   </script>
 </section>
+
 
 
 
