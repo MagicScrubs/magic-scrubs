@@ -113,42 +113,57 @@
       margin-bottom: 1rem;
     }
 
-    /* REUSE BUTTON STYLE */
+    /* GALLERY CAROUSEL */
+    .carousel-container {
+      position: relative; max-width: 800px; height: 450px;
+      margin: auto; overflow: hidden; touch-action: pan-y;
+    }
+    .carousel-track {
+      display: flex; align-items: center; height: 100%;
+      transition: transform 0.5s ease;
+    }
+    .carousel-item { flex: 0 0 auto; margin: 0 10px; }
+    .frame {
+      position: relative; width: 400px; height: 400px;
+      background: #007bff; border-radius: 15px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s;
+    }
+    .frame::before {
+      content: "";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%);
+      z-index: 1;
+    }
+    .frame img {
+      position: relative; z-index: 2;
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      display: block; margin: auto;
+    }
+    .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
+
+    /* BUTTON & ARROWS */
     .button {
-      display: inline-block;
-      background: #007bff;
-      color: #fff;
-      padding: .75rem 2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
+      display: inline-block; background: #007bff; color: #fff;
+      padding: .75rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600;
       transition: background 0.3s, transform 0.3s;
     }
-    .button:hover {
-      background: #0056b3;
-      transform: translateY(-3px);
-    }
+    .button:hover { background: #0056b3; transform: translateY(-3px); }
 
-    /* ARROW BUTTONS */
     #prevService, #nextService,
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 2;
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); color: white; border: none;
+      padding: 12px; border-radius: 50%; cursor: pointer; z-index: 2;
     }
     #prevService { left: 10px; }
     #nextService { right: 10px; }
+    .carousel-btn#prev { left: 10px; }
+    .carousel-btn#next { right: 10px; }
 
-    /* GALLERY CAROUSEL & OTHERS – unchanged... */
-    /* ... */
-    
     /* FOOTER */
     footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
 
@@ -219,10 +234,19 @@
     </div>
   </section>
 
-  <!-- Gallery (unchanged) -->
+  <!-- Gallery -->
   <section id="gallery" class="section reveal">
     <h2>Gallery</h2>
-    <!-- your existing carousel markup… -->
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-item"><div class="frame"><img src="images/before.png" alt="Before"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/after.png" alt="After"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/IMG_5794.jpeg" alt="Foam Corvette"></div></div>
+        <div class="carousel-item"><div class="frame"><img src="images/IMG_5811.jpeg" alt="Green Corvette"></div></div>
+      </div>
+      <button id="prev" class="carousel-btn">&#10094;</button>
+      <button id="next" class="carousel-btn">&#10095;</button>
+    </div>
   </section>
 
   <!-- Contact -->
@@ -286,18 +310,51 @@
         svcIdx = svcIdx === svcItems.length - 1 ? 0 : svcIdx + 1;
         updateServices();
       });
-      let startX = 0;
-      svcContainer.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+      let startX1 = 0;
+      svcContainer.addEventListener('touchstart', e => startX1 = e.touches[0].clientX, {passive:true});
       svcContainer.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX;
+        const dx = e.changedTouches[0].clientX - startX1;
         if (dx > 40) prevSvc.click();
         if (dx < -40) nextSvc.click();
       });
       updateServices();
     });
 
-    // YOUR EXISTING GALLERY CAROUSEL LOGIC…
-    // …
+    // GALLERY CAROUSEL LOGIC
+    document.addEventListener("DOMContentLoaded", () => {
+      const galleryContainer = document.querySelector('.carousel-container');
+      const galleryTrack     = galleryContainer.querySelector('.carousel-track');
+      const galleryItems     = Array.from(galleryTrack.children);
+      const prevBtn          = document.getElementById('prev');
+      const nextBtn          = document.getElementById('next');
+      let idx = 0;
+      function updateGallery() {
+        const parentW = galleryContainer.clientWidth;
+        const itemW   = galleryItems[0].clientWidth + 20;
+        const offset  = (parentW - itemW) / 2 - idx * itemW;
+        galleryTrack.style.transform = `translateX(${offset}px)`;
+        galleryItems.forEach((itm, i) => {
+          const frame = itm.querySelector('.frame');
+          frame.classList.toggle('active', i === idx);
+        });
+      }
+      prevBtn.addEventListener('click', () => {
+        idx = idx === 0 ? galleryItems.length - 1 : idx - 1;
+        updateGallery();
+      });
+      nextBtn.addEventListener('click', () => {
+        idx = idx === galleryItems.length - 1 ? 0 : idx + 1;
+        updateGallery();
+      });
+      let startX2 = 0;
+      galleryContainer.addEventListener('touchstart', e => startX2 = e.touches[0].clientX, {passive:true});
+      galleryContainer.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX2;
+        if (dx > 40) prevBtn.click();
+        if (dx < -40) nextBtn.click();
+      });
+      updateGallery();
+    });
   </script>
 </body>
 </html>
