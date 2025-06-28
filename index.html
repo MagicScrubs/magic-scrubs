@@ -78,9 +78,9 @@
     </div>
   </section>
 
-  <<section id="gallery">
+ <section id="gallery">
   <h2>Gallery</h2>
-  <div class="slider-container" style="position:relative; max-width:700px; margin:auto;">
+  <div class="slider-container" style="position:relative; max-width:700px; margin:auto; touch-action: pan-y;">
     <img id="slide" src="images/before.png" style="width:100%; border-radius:10px;">
     <button id="prev"
             style="position:absolute;top:50%;left:10px;transform:translateY(-50%);
@@ -91,6 +91,7 @@
                    background:rgba(0,0,0,0.5);color:white;border:none;padding:12px;
                    cursor:pointer;border-radius:50%;">&#10095;</button>
   </div>
+
   <script>
     (function(){
       const images = [
@@ -100,17 +101,34 @@
       ];
       let idx = 0;
       const slide = document.getElementById('slide');
-      document.getElementById('prev').onclick = () => {
-        idx = (idx === 0 ? images.length - 1 : idx - 1);
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      const container = document.querySelector('.slider-container');
+
+      function show(i) {
+        idx = (i + images.length) % images.length;
         slide.src = images[idx];
-      };
-      document.getElementById('next').onclick = () => {
-        idx = (idx === images.length - 1 ? 0 : idx + 1);
-        slide.src = images[idx];
-      };
+      }
+
+      prev.onclick = () => show(idx - 1);
+      next.onclick = () => show(idx + 1);
+
+      // Swipe support
+      let startX = 0;
+      container.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      }, {passive: true});
+
+      container.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        const dx = endX - startX;
+        if (dx > 40)      show(idx - 1);  // swipe right
+        else if (dx < -40) show(idx + 1);  // swipe left
+      });
     })();
   </script>
 </section>
+
 
 
   <section id="contact">
