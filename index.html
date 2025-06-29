@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Magic Scrubs - Mobile Car Detailing</title>
   <style>
@@ -11,72 +11,102 @@
     body { font-family: 'Segoe UI', sans-serif; background: #eef4fc; color: #222; }
 
     /* NAVBAR */
-    nav {
-      position: sticky; top: 0; background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(6px);
-      display: flex; justify-content: center; gap: 2rem;
-      padding: 1rem 0; z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s;
-    }
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px);
+      display: flex; justify-content: center; gap: 2rem; padding: 1rem 0; z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: background 0.3s; }
     nav.scrolled { background: #007bff; }
     nav a { color: #007bff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
     nav.scrolled a { color: #fff; }
     nav a:hover { color: #0056b3; }
 
     /* HEADER */
-    header { text-align: center; padding: 6rem 1rem; background: linear-gradient(120deg, #007bff, #00cfff); color: #fff; }
+    header { text-align: center; padding: 6rem 1rem;
+      background: linear-gradient(120deg, #007bff, #00cfff); color: #fff; }
     header h1 { font-size: 3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     header p { font-size: 1.25rem; margin: .5rem 0; }
 
     /* SECTION WRAPPER & BORDER EFFECT */
-    .section { position: relative; padding: 3rem 1rem; margin: 2rem auto; max-width: 900px; border: 2px solid transparent; border-radius: 8px; transition: border-color 0.4s ease; }
+    .section { position: relative; padding: 3rem 1rem; margin: 2rem auto;
+      max-width: 900px; border: 2px solid transparent; border-radius: 8px;
+      transition: border-color 0.4s ease; }
     .section.border-visible { border-color: #007bff; }
 
     /* SECTION TITLES */
-    section h2 { font-size: 2rem; text-align: center; margin-bottom: 1rem; color: #0056b3; position: relative; }
-    section h2::after { content: ''; display: block; width: 60px; height: 4px; background: #00cfff; margin: .5rem auto 0; border-radius: 2px; }
+    section h2 { font-size: 2rem; text-align: center;
+      margin-bottom: 1rem; color: #0056b3; position: relative; }
+    section h2::after { content: ''; display: block; width: 60px; height: 4px;
+      background: #00cfff; margin: .5rem auto 0; border-radius: 2px; }
 
     /* ABOUT CONTENT */
-    #about .about-content { text-align: left; line-height: 1.6; color: #333; font-size: 1rem; max-width: 800px; margin: 1rem auto 0; }
+    #about .about-content { text-align: left; line-height: 1.6;
+      color: #333; font-size: 1rem; max-width: 800px; margin: 1rem auto 0; }
     #about .about-content h3 { margin-top: 1.5rem; color: #0056b3; font-size: 1.3rem; }
     #about .about-content ul { margin: 1rem 0 0 1.5rem; list-style: disc; }
 
     /* SERVICES CAROUSEL */
-    .services-carousel-container { position: relative; max-width: 800px; margin: auto; overflow: hidden; touch-action: pan-y; }
-    .services-track { display: flex; gap: 20px; transition: transform 0.5s ease; padding: 20px 0; }
-    .service-item { flex: 0 0 280px; background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
+    .services-carousel-container { position: relative; max-width: 800px;
+      margin: auto; overflow: hidden; touch-action: pan-y; }
+    .services-track { display: flex; gap: 20px;
+      transition: transform 0.5s ease; padding: 20px 0; }
+    .service-item { flex: 0 0 280px; background: #fff;
+      border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
     .service-item img { width: 100%; border-radius: 8px; margin-bottom: 1rem; }
     .service-item h3 { color: #007bff; margin-bottom: .75rem; }
     .service-item p { font-size: .95rem; color: #555; margin-bottom: 1rem; }
 
     /* INFINITE WHEEL GALLERY CAROUSEL */
-    .carousel-container { position: relative; max-width: 800px; height: 450px; margin: auto; overflow: hidden; touch-action: pan-y; }
-    .carousel-track { display: flex; align-items: center; height: 100%; transition: transform 0.5s ease; }
+    .carousel-container { position: relative; max-width: 800px; height: 450px;
+      margin: auto; overflow: hidden; touch-action: pan-y; }
+    .carousel-track { display: flex; align-items: center;
+      height: 100%; transition: transform 0.5s ease; }
     .carousel-item { flex: 0 0 auto; margin: 0 10px; }
-    .frame { position: relative; width: 400px; height: 400px; background: #007bff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s; }
-    .frame::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%); z-index: 1; }
-    .frame img { position: relative; z-index: 2; max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: auto; }
+    .frame { position: relative; width: 400px; height: 400px;
+      background: #007bff; border-radius: 15px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s; }
+    .frame::before { content: ""; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%);
+      z-index: 1; }
+    .frame img { position: relative; z-index: 2;
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      display: block; margin: auto; }
     .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
 
     /* BUTTON & ARROWS */
-    .button { display: inline-block; background: #007bff; color: #fff; padding: .75rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s, transform 0.3s; }
+    .button { display: inline-block; background: #007bff;
+      color: #fff; padding: .75rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600;
+      transition: background 0.3s, transform 0.3s; }
     .button:hover { background: #0056b3; transform: translateY(-3px); }
-    #prevService, #nextService, .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px; border-radius: 50%; cursor: pointer; z-index: 2; }
+    #prevService, #nextService, .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); color: white;
+      border: none; padding: 12px; border-radius: 50%;
+      cursor: pointer; z-index: 2; }
     #prevService { left: 10px; } #nextService { right: 10px; }
     .carousel-btn#prev { left: 10px; } .carousel-btn#next { right: 10px; }
 
     /* FOOTER */
-    footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
+    footer { background: #fff; padding: 2rem 1rem;
+      text-align:center; color: #777; }
     /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .reveal { opacity: 0; transform: translateY(20px);
+      transition: all 0.6s ease; }
     .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
   <!-- Hero Banner -->
-  <section id="hero" class="section reveal" style=" background: url('images/hero-banner.jpg') center/cover no-repeat; height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); ">
+  <section id="hero" class="section reveal" style="
+      background: url('images/hero-banner.jpg') center/cover no-repeat;
+      height: 60vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    ">
     <h1>Magic Scrubs Detailing</h1>
     <p>Premium mobile car detailing brought right to your driveway in Sacramento.</p>
     <a href="#contact" class="button">Book Now</a>
@@ -149,61 +179,69 @@
   <script>
     // SCROLL REVEAL
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target);} }); }, { threshold: 0.2 }); reveals.forEach(r => observer.observe(r));
+    const observer = new IntersectionObserver((entries) => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); }
+    }), { threshold: 0.2 }); reveals.forEach(r => observer.observe(r));
 
     // BORDER FADE IN/OUT
-    const sections = document.querySelectorAll('.section');
-    const borderObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { entry.target.classList.toggle('border-visible', entry.isIntersecting); }); }, { threshold: 0.1 }); sections.forEach(sec => borderObserver.observe(sec));
+    const secs = document.querySelectorAll('.section');
+    const bordObs = new IntersectionObserver((es) => es.forEach(e => {
+      e.target.classList.toggle('border-visible', e.isIntersecting);
+    }), { threshold: 0.1 }); secs.forEach(s => bordObs.observe(s));
 
     // NAVBAR TRANSPARENT→SOLID
-    const nav = document.querySelector('nav'); window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+    window.addEventListener('scroll', () => document.querySelector('nav')
+      .classList.toggle('scrolled', window.scrollY > 50));
 
-    // SERVICES CAROUSEL LOGIC (unchanged)
+    // SERVICES CAROUSEL
+    document.addEventListener('DOMContentLoaded', () => {
+      const svcC = document.querySelector('.services-carousel-container');
+      const svcT = svcC.querySelector('.services-track');
+      const svcs = Array.from(svcT.children);
+      const pS = document.getElementById('prevService');
+      const nS = document.getElementById('nextService');
+      let sIdx = 0;
+      function updSvc() {
+        const cw = svcC.clientWidth;
+        const iw = svcs[0].clientWidth + 20;
+        svcT.style.transform = `translateX(${(cw - iw)/2 - sIdx*iw}px)`;
+      }
+      pS.addEventListener('click', () => { sIdx = (sIdx-1 + svcs.length)%svcs.length; updSvc(); });
+      nS.addEventListener('click', () => { sIdx = (sIdx+1)%svcs.length; updSvc(); });
+      let sX=0; svcC.addEventListener('touchstart',e=>sX=e.touches[0].clientX,{passive:true});
+      svcC.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-sX; if(dx>40) pS.click(); if(dx<-40) nS.click(); });
+      updSvc();
+    });
 
     // INFINITE WHEEL GALLERY LOGIC
     document.addEventListener("DOMContentLoaded", () => {
-      const container = document.querySelector('.carousel-container');
-      const track = container.querySelector('.carousel-track');
-      let items = Array.from(track.children);
+      const C = document.querySelector('.carousel-container');
+      const T = C.querySelector('.carousel-track');
+      let items = Array.from(T.children);
       const gap = 20;
-      let index = 1;
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-
-      function setPosition(i, instant=false) {
-        const itemW = items[i].clientWidth + gap;
-        const offset = (container.clientWidth - itemW) / 2 - i * itemW;
-        track.style.transition = instant ? 'none' : 'transform 0.5s ease';
-        track.style.transform = `translateX(${offset}px)`;
+      let idx = 1;
+      const p = document.getElementById('prev');
+      const n = document.getElementById('next');
+      function setPos(i, inst=false) {
+        const w = items[i].clientWidth + gap;
+        const off = (C.clientWidth - w)/2 - i*w;
+        if(inst) { T.style.transition='none'; } else { T.style.transition='transform 0.5s ease'; }
+        T.style.transform = `translateX(${off}px)`;
+        if(inst) requestAnimationFrame(()=>T.style.transition='transform 0.5s ease');
       }
-
-      track.addEventListener('transitionend', () => {
-        items = Array.from(track.children);
-        if (items[index].classList.contains('clone')) {
-          index = index === 0 ? items.length - 2 : 1;
-          setPosition(index, true);
+      T.addEventListener('transitionend', () => {
+        items = Array.from(T.children);
+        if(items[idx].classList.contains('clone')) {
+          idx = idx===0?items.length-2:1;
+          setPos(idx,true);
         }
       });
-
-      function move(dir) {
-        index += dir;
-        setPosition(index);
-        items.forEach((itm, i) => itm.querySelector('.frame').classList.toggle('active', i === index));
-      }
-
-      prevBtn.addEventListener('click', () => move(-1));
-      nextBtn.addEventListener('click', () => move(1));
-
-      let startX = 0;
-      container.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-      container.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 40) move(-1);
-        if (dx < -40) move(1);
-      });
-
-      setPosition(index, true);
-      items[index].querySelector('.frame').classList.add('active');
+      function mv(d){ idx=(idx+d+items.length)%items.length; setPos(idx); items.forEach((it,i)=>it.querySelector('.frame').classList.toggle('active',i===idx)); }
+      p.addEventListener('click',()=>mv(-1)); n.addEventListener('click',()=>mv(1));
+      let x0=0; C.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+      C.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-x0; if(dx>40) p.click(); if(dx<-40) n.click(); });
+      setPos(idx,true);
+      items[idx].querySelector('.frame').classList.add('active');
     });
   </script>
 </body>
