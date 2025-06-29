@@ -8,89 +8,71 @@
     /* GLOBAL RESET & SMOOTH SCROLL */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', sans-serif; background: #007bff; color: #fff; }
+    body { font-family: 'Segoe UI', sans-serif; background: #ffffff; color: #222; }
 
     /* NAVBAR */
-    nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px);
-      display: flex; justify-content: center; gap: 2rem; padding: 1rem 0; z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: background 0.3s; }
-    nav.scrolled { background: #007bff; }
-    nav a { color: #007bff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
-    nav.scrolled a { color: #fff; }
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(6px);
+      display: flex; justify-content: center; gap: 2rem; padding: 1rem; z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    nav a { color: #007bff; text-decoration: none; font-weight: 600; }
     nav a:hover { color: #0056b3; }
 
     /* HEADER */
-    header { text-align: center; padding: 6rem 1rem;
+    header {
+      position: relative;
+      height: 100vh;
       background: url('images/IMG_5794.jpeg') center/cover no-repeat;
-      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-    header h1 { font-size: 3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    header h1 { font-size: 3rem; }
     header p { font-size: 1.25rem; margin: .5rem 0; }
 
-    /* SECTION WRAPPER & BORDER EFFECT */
-    .section { position: relative; padding: 3rem 1rem; margin: 2rem auto;
-      max-width: 900px; border: 2px solid transparent; border-radius: 8px;
-      transition: border-color 0.4s ease; }
-    .section.border-visible { border-color: #007bff; }
-
-    /* SECTION TITLES */
-    section h2 { font-size: 2rem; text-align: center;
-      margin-bottom: 1rem; color: #0056b3; position: relative; }
-    section h2::after { content: ''; display: block; width: 60px; height: 4px;
-      background: #00cfff; margin: .5rem auto 0; border-radius: 2px; }
-
-    /* ABOUT CONTENT */
-    #about .about-content { text-align: left; line-height: 1.6;
-      color: #333; font-size: 1rem; max-width: 800px; margin: 1rem auto 0; }
-    #about .about-content h3 { margin-top: 1.5rem; color: #0056b3; font-size: 1.3rem; }
-    #about .about-content ul { margin: 1rem 0 0 1.5rem; list-style: disc; }
+    /* SECTION WRAPPER */
+    .section { padding: 3rem 1rem; margin: 2rem auto; max-width: 900px; }
+    section h2 { font-size: 2rem; text-align: center; margin-bottom: 1rem; color: #fff; }
 
     /* SERVICES CAROUSEL */
-    .services-carousel-container { position: relative; max-width: 800px;
-      margin: auto; overflow: hidden; touch-action: pan-y; }
-    .services-track { display: flex; gap: 20px;
-      transition: transform 0.5s ease; padding: 20px 0; }
-    .service-item { flex: 0 0 280px; background: #fff;
-      border-radius: 12px; padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
-    .service-item img { width: 100%; border-radius: 8px; margin-bottom: 1rem; }
-    .service-item h3 { color: #007bff; margin-bottom: .75rem; }
-    .service-item p { font-size: .95rem; color: #555; margin-bottom: 1rem; }
+    .services-carousel-container { position: relative; max-width: 800px; margin: auto; overflow: hidden; }
+    .services-track { display: flex; transition: transform 0.5s ease; }
+    .service-item { flex: 0 0 280px; background: #fff; color: #222;
+      border-radius: 8px; padding: 1.5rem; text-align: center; margin: 0 10px; }
+    .service-item img { width: 100%; border-radius: 6px; margin-bottom: 1rem; }
+    .service-item h3 { color: #007bff; margin-bottom: .5rem; }
+    .service-item .price { color: #0056b3; font-weight: bold; margin-bottom: .5rem; }
 
-    /* INFINITE WHEEL GALLERY CAROUSEL */
-    .carousel-container { position: relative; max-width: 800px; height: 450px;
-      margin: auto; overflow: hidden; touch-action: pan-y; }
-    .carousel-track { display: flex; align-items: center;
-      height: 100%; transition: transform 0.5s ease; }
-    .carousel-item { flex: 0 0 auto; margin: 0 10px; }
-    .frame { position: relative; width: 400px; height: 400px;
-      background: #fff; border-radius: 15px; overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s; }
+    /* GALLERY FINITE CAROUSEL - RESPONSIVE */
+    .carousel-container { position: relative; max-width: 100%; margin: auto; overflow: hidden; }
+    .carousel-track { display: flex; transition: transform 0.5s ease; }
+    .carousel-item {
+      flex: 0 0 80%;
+      max-width: 80%;
+      margin: 0 10px;
+    }
+    @media (min-width: 600px) {
+      .carousel-item { flex: 0 0 45%; max-width: 45%; }
+    }
+    @media (min-width: 1024px) {
+      .carousel-item { flex: 0 0 400px; max-width: 400px; }
+    }
+    .frame { width: 100%; height: 300px; background: #fff; border-radius: 8px;
+      overflow: hidden; }
     .frame img { width: 100%; height: 100%; object-fit: cover; }
-    .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); color: #fff; border: none;
+      padding: 10px; border-radius: 50%; cursor: pointer; }
+    #prev { left: 10px; } #next { right: 10px; }
 
-    /* BUTTON & ARROWS */
-    .button { display: inline-block; background: #007bff;
-      color: #fff; padding: .75rem 2rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600;
-      transition: background 0.3s, transform 0.3s; }
-    .button:hover { background: #0056b3; transform: translateY(-3px); }
-    #prevService, #nextService, .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%);
-      background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px;
-      border-radius: 50%; cursor: pointer; z-index: 2; }
-    #prevService { left: 10px; } #nextService { right: 10px; }
-    .carousel-btn#prev { left: 10px; } .carousel-btn#next { right: 10px; }
-
-    /* FOOTER */
-    footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
-    /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
+    /* CONTACT & FOOTER */
+    #contact { text-align: center; }
+    footer { text-align: center; padding: 2rem; color: #fff; }
   </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
   <nav>
     <a href="#hero">Home</a>
     <a href="#about">About</a>
@@ -99,173 +81,97 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- Hero Banner -->
-  <header id="hero" class="section reveal">
+  <header id="hero">
     <h1>Magic Scrubs Detailing</h1>
     <p>Premium mobile car detailing brought right to your driveway in Sacramento.</p>
     <a href="#contact" class="button">Book Now</a>
   </header>
 
-  <!-- About Us -->
-  <section id="about" class="section reveal">
+  <section id="about" class="section">
     <h2>About Us</h2>
-    <div class="about-content">
-      <p>At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your doorstep. Our team takes pride in restoring the shine and freshness of every vehicle — inside and out.</p>
-      <h3>What We Do</h3>
-      <p>We offer a full spectrum of services from exterior hand washes and protective wax to deep interior shampooing, leather conditioning, and stain removal.</p>
-      <h3>Our Goal</h3>
-      <p>To exceed expectations with every service, leaving your vehicle looking—and feeling—brand new.</p>
-      <h3>What Is Car Detailing?</h3>
-      <p>Detaling is a comprehensive deep-clean and restoration process that preserves paint, revitalizes interiors, and protects against environmental damage.</p>
-      <h3>Why Get Detailing?</h3>
-      <ul>
-        <li>Protects paint from environmental damage</li>
-        <li>Removes stubborn stains & odors inside</li>
-        <li>Restores showroom-quality shine</li>
-        <li>Helps maintain resale value</li>
-        <li>Personalized care tailored to your vehicle</li>
-      </ul>
-    </div>
+    <p style="color:#fff; text-align:center;">At Magic Scrubs, we deliver top-tier mobile car detailing services...</p>
   </section>
 
-  <!-- Services Carousel -->
-  <section id="services" class="section reveal">
+  <section id="services" class="section">
     <h2>Our Services</h2>
     <div class="services-carousel-container">
+      <button id="prevService" class="carousel-btn">&#10094;</button>
       <div class="services-track">
-        <div class="service-item"><img src="images/service-full-detail.jpg" alt="Full Detail"><h3>Full Detail</h3><p>Complete interior + exterior treatment: vacuum, wash, wax, & polish.</p><a href="#contact" class="button">Schedule Now</a></div>
-        <div class="service-item"><img src="images/service-deep-clean.jpg" alt="Deep Clean"><h3>Deep Clean</h3><p>Heavy-duty shampooing, stain removal & odor treatment for interiors.</p><a href="#contact" class="button">Schedule Now</a></div>
-        <div class="service-item"><img src="images/service-exterior-wash.jpg" alt="Exterior Wash &amp; Wax"><h3>Exterior Wash &amp; Wax</h3><p>Foam cannon hand wash, wheel shine, and protective sealant finish.</p><a href="#contact" class="button">Schedule Now</a></div>
+        <div class="service-item">
+          <img src="images/service-full-detail.jpg" alt="Full Detail">
+          <h3>Full Detail</h3>
+          <p class="price">$120 - $200</p>
+        </div>
+        <div class="service-item">
+          <img src="images/service-deep-clean.jpg" alt="Deep Clean">
+          <h3>Deep Clean</h3>
+          <p class="price">$180 - $250</p>
+        </div>
+        <div class="service-item">
+          <img src="images/service-exterior-wash.jpg" alt="Exterior Wash">
+          <h3>Exterior Wash &amp; Wax</h3>
+          <p class="price">$60 - $120</p>
+        </div>
       </div>
-      <button id="prevService">&#10094;</button>
-      <button id="nextService">&#10095;</button>
+      <button id="nextService" class="carousel-btn">&#10095;</button>
     </div>
   </section>
 
-  <!-- Gallery (Infinite Wheel) -->
-  <section id="gallery" class="section reveal">
+  <section id="gallery" class="section">
     <h2>Gallery</h2>
     <div class="carousel-container">
+      <button id="prev" class="carousel-btn">&#10094;</button>
       <div class="carousel-track">
-        <div class="carousel-item clone"><div class="frame"><img src="images/IMG_5811.jpeg" alt="Green Corvette"></div></div>
         <div class="carousel-item"><div class="frame"><img src="images/before.png" alt="Before"></div></div>
         <div class="carousel-item"><div class="frame"><img src="images/after.png" alt="After"></div></div>
         <div class="carousel-item"><div class="frame"><img src="images/IMG_5794.jpeg" alt="Foam Corvette"></div></div>
         <div class="carousel-item"><div class="frame"><img src="images/IMG_5811.jpeg" alt="Green Corvette"></div></div>
-        <div class="carousel-item clone"><div class="frame"><img src="images/before.png" alt="Before"></div></div>
       </div>
-      <button id="prev" class="carousel-btn">&#10094;</button>
       <button id="next" class="carousel-btn">&#10095;</button>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="section reveal">
+  <section id="contact" class="section">
     <h2>Contact Us</h2>
     <a href="tel:9162887605" class="button">Call 916-288-7605</a>
   </section>
 
-  <!-- Footer -->
-  <footer class="section reveal">
-    © 2025 Magic Scrubs. All rights reserved.
+  <footer>
+    <p>© 2025 Magic Scrubs. All rights reserved.</p>
   </footer>
 
   <script>
-    // SCROLL REVEAL
-    document.querySelectorAll('.reveal').forEach(el => {
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); }});
-      }, { threshold: 0.2 });
-      io.observe(el);
-    });
+        // CAROUSEL INITIALIZATION
+    function initCarousel(containerSelector, prevSelector, nextSelector, trackClass) {
+      const C = document.querySelector(containerSelector);
+      if (!C) return;
+      const track = C.querySelector(trackClass);
+      const items = Array.from(track.children);
+      let idx = 0;
+      const prev = document.querySelector(prevSelector);
+      const next = document.querySelector(nextSelector);
 
-    // BORDER FADE IN/OUT
-    document.querySelectorAll('.section').forEach(sec => {
-      const bo = new IntersectionObserver(([e]) => sec.classList.toggle('border-visible', e.isIntersecting), { threshold: 0.1 });
-      bo.observe(sec);
-    });
+      function update() {
+        const cw = C.clientWidth;
+        const iw = items[0].clientWidth + parseInt(getComputedStyle(items[0]).marginRight) + parseInt(getComputedStyle(items[0]).marginLeft);
+        track.style.transform = `translateX(${(cw - iw)/2 - idx*iw}px)`;
+      }
 
-    // NAVBAR TRANSPARENT→SOLID
-    const navEl = document.querySelector('nav');
-    if (navEl) {
-      window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', window.scrollY > 50));
+      prev.addEventListener('click', () => { idx = (idx - 1 + items.length) % items.length; update(); });
+      next.addEventListener('click', () => { idx = (idx + 1) % items.length; update(); });
+      update();
+
+      // swipe support
+      let startX = 0;
+      C.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+      C.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40) prev.click();
+        if (dx < -40) next.click();
+      });
     }
 
-    // SERVICES CAROUSEL LOGIC
-    window.addEventListener('DOMContentLoaded', () => {
-      const svcC = document.querySelector('.services-carousel-container');
-      const svcT = svcC.querySelector('.services-track');
-      const svcs = Array.from(svcT.children);
-      let sIdx = 0;
-      const pS = document.getElementById('prevService');
-      const nS = document.getElementById('nextService');
-
-      const updateServices = () => {
-        const cw = svcC.clientWidth;
-        const iw = svcs[0].clientWidth + 20;
-        svcT.style.transform = `translateX(${(cw - iw) / 2 - sIdx * iw}px)`;
-      };
-
-      pS.addEventListener('click', () => { sIdx = (sIdx - 1 + svcs.length) % svcs.length; updateServices(); });
-      nS.addEventListener('click', () => { sIdx = (sIdx + 1) % svcs.length; updateServices(); });
-
-      let startX = 0;
-      svcC.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
-      svcC.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 40) pS.click();
-        if (dx < -40) nS.click();
-      });
-
-      updateServices();
+    document.addEventListener('DOMContentLoaded', () => {
+      initCarousel('.services-carousel-container', '#prevService', '#nextService', '.services-track');
+      initCarousel('.carousel-container', '#prev', '#next', '.carousel-track');
     });
-
-    // INFINITE WHEEL GALLERY LOGIC
-    window.addEventListener('DOMContentLoaded', () => {
-      const C = document.querySelector('.carousel-container');
-      const T = C.querySelector('.carousel-track');
-      let items = Array.from(T.children);
-      const gap = 20;
-      let idx = 1;
-      const p = document.getElementById('prev');
-      const n = document.getElementById('next');
-
-      const setPosition = (i, instant = false) => {
-        const w = items[i].clientWidth + gap;
-        const offset = (C.clientWidth - w) / 2 - i * w;
-        T.style.transition = instant ? 'none' : 'transform 0.5s ease';
-        T.style.transform = `translateX(${offset}px)`;
-        if (instant) requestAnimationFrame(() => T.style.transition = 'transform 0.5s ease');
-      };
-
-      T.addEventListener('transitionend', () => {
-        items = Array.from(T.children);
-        if (items[idx].classList.contains('clone')) {
-          idx = idx === 0 ? items.length - 2 : 1;
-          setPosition(idx, true);
-        }
-      });
-
-      const mv = dir => {
-        idx = (idx + dir + items.length) % items.length;
-        setPosition(idx);
-        items.forEach((it, i) => it.querySelector('.frame').classList.toggle('active', i === idx));
-      };
-
-      p.addEventListener('click', () => mv(-1));
-      n.addEventListener('click', () => mv(1));
-
-      let startX2 = 0;
-      C.addEventListener('touchstart', e => startX2 = e.touches[0].clientX, { passive: true });
-      C.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX2;
-        if (dx > 40) p.click();
-        if (dx < -40) n.click();
-      });
-
-      setPosition(idx, true);
-      items[idx].querySelector('.frame').classList.add('active');
-    });
-  </script>
-</body>
-</html>
