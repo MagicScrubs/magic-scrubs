@@ -21,7 +21,8 @@
 
     /* HEADER */
     header { text-align: center; padding: 6rem 1rem;
-      background: linear-gradient(120deg, #007bff, #00cfff); color: #fff; }
+      background: url('images/IMG_5794.jpeg') center/cover no-repeat;
+      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
     header h1 { font-size: 3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     header p { font-size: 1.25rem; margin: .5rem 0; }
 
@@ -65,8 +66,7 @@
       background: #fff; border-radius: 15px; overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s; }
-    
-    .frame img { width: 100%; height: 100%; object-fit: cover; display: block; margin: 0; }
+    .frame img { width: 100%; height: 100%; object-fit: cover; }
     .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
 
     /* BUTTON & ARROWS */
@@ -75,36 +75,36 @@
       text-decoration: none; font-weight: 600;
       transition: background 0.3s, transform 0.3s; }
     .button:hover { background: #0056b3; transform: translateY(-3px); }
-    #prevService, #nextService, .carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: rgba(0,0,0,0.5); color: white;
-      border: none; padding: 12px; border-radius: 50%;
-      cursor: pointer; z-index: 2; }
+    #prevService, #nextService, .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px;
+      border-radius: 50%; cursor: pointer; z-index: 2; }
     #prevService { left: 10px; } #nextService { right: 10px; }
     .carousel-btn#prev { left: 10px; } .carousel-btn#next { right: 10px; }
 
     /* FOOTER */
-    footer { background: #fff; padding: 2rem 1rem;
-      text-align:center; color: #777; }
+    footer { background: #fff; padding: 2rem 1rem; text-align:center; color: #777; }
     /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(20px);
-      transition: all 0.6s ease; }
+    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
     .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <!-- Hero Banner -->
-  <section id="hero" class="section reveal" style="
-      background: url('images/hero-banner.jpg') center/cover no-repeat;
-      height: 60vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    ">
+  <header id="hero" class="section reveal">
     <h1>Magic Scrubs Detailing</h1>
     <p>Premium mobile car detailing brought right to your driveway in Sacramento.</p>
     <a href="#contact" class="button">Book Now</a>
-  </section>
+  </header>
 
   <!-- About Us -->
   <section id="about" class="section reveal">
@@ -116,7 +116,7 @@
       <h3>Our Goal</h3>
       <p>To exceed expectations with every service, leaving your vehicle looking—and feeling—brand new.</p>
       <h3>What Is Car Detailing?</h3>
-      <p>Car detailing is a comprehensive deep-clean and restoration process that preserves paint, revitalizes interiors, and protects against environmental damage.</p>
+      <p>Detaling is a comprehensive deep-clean and restoration process that preserves paint, revitalizes interiors, and protects against environmental damage.</p>
       <h3>Why Get Detailing?</h3>
       <ul>
         <li>Protects paint from environmental damage</li>
@@ -142,7 +142,7 @@
     </div>
   </section>
 
-  <!-- Gallery (Infinite) -->
+  <!-- Gallery (Infinite Wheel) -->
   <section id="gallery" class="section reveal">
     <h2>Gallery</h2>
     <div class="carousel-container">
@@ -172,55 +172,100 @@
 
   <script>
     // SCROLL REVEAL
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); }
-    }), { threshold: 0.2 }); reveals.forEach(r => observer.observe(r));
+    document.querySelectorAll('.reveal').forEach(el => {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); }});
+      }, { threshold: 0.2 });
+      io.observe(el);
+    });
 
     // BORDER FADE IN/OUT
-    const secs2 = document.querySelectorAll('.section');
-    const bordObs2 = new IntersectionObserver((es) => es.forEach(e => {
-      e.target.classList.toggle('border-visible', e.isIntersecting);
-    }), { threshold: 0.1 }); secs2.forEach(s => bordObs2.observe(s));
+    document.querySelectorAll('.section').forEach(sec => {
+      const bo = new IntersectionObserver(([e]) => sec.classList.toggle('border-visible', e.isIntersecting), { threshold: 0.1 });
+      bo.observe(sec);
+    });
 
     // NAVBAR TRANSPARENT→SOLID
-    window.addEventListener('scroll', () => document.querySelector('nav')
-      .classList.toggle('scrolled', window.scrollY > 50));
+    const navEl = document.querySelector('nav');
+    if (navEl) {
+      window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', window.scrollY > 50));
+    }
 
     // SERVICES CAROUSEL LOGIC
-    document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', () => {
       const svcC = document.querySelector('.services-carousel-container');
       const svcT = svcC.querySelector('.services-track');
-      const svcs=Array.from(svcT.children);
-      const pS=document.getElementById('prevService'), nS=document.getElementById('nextService');
-      let sIdx=0; function updSvc(){ const cw=svcC.clientWidth, iw=svcs[0].clientWidth+20;
-        svcT.style.transform=`translateX(${(cw-iw)/2 - sIdx*iw}px)`; }
-      pS.addEventListener('click',()=>{ sIdx=(sIdx-1+svcs.length)%svcs.length; updSvc(); });
-      nS.addEventListener('click',()=>{ sIdx=(sIdx+1)%svcs.length; updSvc(); });
-      let sX=0; svcC.addEventListener('touchstart',e=>sX=e.touches[0].clientX,{passive:true});
-      svcC.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-sX;
-        if(dx>40) pS.click(); if(dx<-40) nS.click(); }); updSvc(); });
+      const svcs = Array.from(svcT.children);
+      let sIdx = 0;
+      const pS = document.getElementById('prevService');
+      const nS = document.getElementById('nextService');
+
+      const updateServices = () => {
+        const cw = svcC.clientWidth;
+        const iw = svcs[0].clientWidth + 20;
+        svcT.style.transform = `translateX(${(cw - iw) / 2 - sIdx * iw}px)`;
+      };
+
+      pS.addEventListener('click', () => { sIdx = (sIdx - 1 + svcs.length) % svcs.length; updateServices(); });
+      nS.addEventListener('click', () => { sIdx = (sIdx + 1) % svcs.length; updateServices(); });
+
+      let startX = 0;
+      svcC.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+      svcC.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40) pS.click();
+        if (dx < -40) nS.click();
+      });
+
+      updateServices();
+    });
 
     // INFINITE WHEEL GALLERY LOGIC
-    document.addEventListener("DOMContentLoaded",()=>{
-      const C=document.querySelector('.carousel-container');
-      const T=C.querySelector('.carousel-track');
-      let items=Array.from(T.children), gap=20, idx=1;
-      const p=document.getElementById('prev'), n=document.getElementById('next');
-      function setPos(i, inst=false){ const w=items[i].clientWidth+gap;
-        const off=(C.clientWidth-w)/2 - i*w;
-        T.style.transition=inst?'none':'transform 0.5s ease';
-        T.style.transform=`translateX(${off}px)`;
-        if(inst) requestAnimationFrame(()=>T.style.transition='transform 0.5s ease'); }
-      T.addEventListener('transitionend',()=>{ items=Array.from(T.children);
-        if(items[idx].classList.contains('clone')){ idx=idx===0?items.length-2:1; setPos(idx,true); } });
-      function mv(d){ idx=(idx+d+items.length)%items.length; setPos(idx); items.forEach((it,i)=> 
-        it.querySelector('.frame').classList.toggle('active',i===idx)); }
-      p.addEventListener('click',()=>mv(-1)); n.addEventListener('click',()=>mv(1));
-      let x0=0; C.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
-      C.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-x0;
-        if(dx>40) p.click(); if(dx<-40) n.click(); }); setPos(idx,true);
-      items[idx].querySelector('.frame').classList.add('active');});
+    window.addEventListener('DOMContentLoaded', () => {
+      const C = document.querySelector('.carousel-container');
+      const T = C.querySelector('.carousel-track');
+      let items = Array.from(T.children);
+      const gap = 20;
+      let idx = 1;
+      const p = document.getElementById('prev');
+      const n = document.getElementById('next');
+
+      const setPosition = (i, instant = false) => {
+        const w = items[i].clientWidth + gap;
+        const offset = (C.clientWidth - w) / 2 - i * w;
+        T.style.transition = instant ? 'none' : 'transform 0.5s ease';
+        T.style.transform = `translateX(${offset}px)`;
+        if (instant) requestAnimationFrame(() => T.style.transition = 'transform 0.5s ease');
+      };
+
+      T.addEventListener('transitionend', () => {
+        items = Array.from(T.children);
+        if (items[idx].classList.contains('clone')) {
+          idx = idx === 0 ? items.length - 2 : 1;
+          setPosition(idx, true);
+        }
+      });
+
+      const mv = dir => {
+        idx = (idx + dir + items.length) % items.length;
+        setPosition(idx);
+        items.forEach((it, i) => it.querySelector('.frame').classList.toggle('active', i === idx));
+      };
+
+      p.addEventListener('click', () => mv(-1));
+      n.addEventListener('click', () => mv(1));
+
+      let startX2 = 0;
+      C.addEventListener('touchstart', e => startX2 = e.touches[0].clientX, { passive: true });
+      C.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX2;
+        if (dx > 40) p.click();
+        if (dx < -40) n.click();
+      });
+
+      setPosition(idx, true);
+      items[idx].querySelector('.frame').classList.add('active');
+    });
   </script>
 </body>
 </html>
