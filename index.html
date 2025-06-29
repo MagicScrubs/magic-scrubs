@@ -61,7 +61,8 @@
     .carousel-track { display: flex; align-items: center;
       height: 100%; transition: transform 0.5s ease; }
     .carousel-item { flex: 0 0 auto; margin: 0 10px; }
-    .frame {$1background: #fff; border-radius: 15px; overflow: hidden;
+    .frame { position: relative; width: 400px; height: 400px;
+      background: #fff; border-radius: 15px; overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s; }
     .frame::before { content: ""; position: absolute;
@@ -69,9 +70,7 @@
       width: 200%; height: 200%;
       background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(0,123,255,0) 60%);
       z-index: 1; }
-    .frame img { position: relative; z-index: 2;
-      max-width: 100%; max-height: 100%; object-fit: contain;
-      display: block; margin: auto; }
+    .frame img { width: 100%; height: 100%; object-fit: cover; display: block; margin: 0; }
     .frame.active { box-shadow: 0 0 30px 5px rgba(0,204,255,0.5); }
 
     /* BUTTON & ARROWS */
@@ -183,65 +182,49 @@
     }), { threshold: 0.2 }); reveals.forEach(r => observer.observe(r));
 
     // BORDER FADE IN/OUT
-    const secs = document.querySelectorAll('.section');
-    const bordObs = new IntersectionObserver((es) => es.forEach(e => {
+    const secs2 = document.querySelectorAll('.section');
+    const bordObs2 = new IntersectionObserver((es) => es.forEach(e => {
       e.target.classList.toggle('border-visible', e.isIntersecting);
-    }), { threshold: 0.1 }); secs.forEach(s => bordObs.observe(s));
+    }), { threshold: 0.1 }); secs2.forEach(s => bordObs2.observe(s));
 
     // NAVBAR TRANSPARENT→SOLID
     window.addEventListener('scroll', () => document.querySelector('nav')
       .classList.toggle('scrolled', window.scrollY > 50));
 
-    // SERVICES CAROUSEL
+    // SERVICES CAROUSEL LOGIC
     document.addEventListener('DOMContentLoaded', () => {
       const svcC = document.querySelector('.services-carousel-container');
       const svcT = svcC.querySelector('.services-track');
-      const svcs = Array.from(svcT.children);
-      const pS = document.getElementById('prevService');
-      const nS = document.getElementById('nextService');
-      let sIdx = 0;
-      function updSvc() {
-        const cw = svcC.clientWidth;
-        const iw = svcs[0].clientWidth + 20;
-        svcT.style.transform = `translateX(${(cw - iw)/2 - sIdx*iw}px)`;
-      }
-      pS.addEventListener('click', () => { sIdx = (sIdx-1 + svcs.length)%svcs.length; updSvc(); });
-      nS.addEventListener('click', () => { sIdx = (sIdx+1)%svcs.length; updSvc(); });
+      const svcs=Array.from(svcT.children);
+      const pS=document.getElementById('prevService'), nS=document.getElementById('nextService');
+      let sIdx=0; function updSvc(){ const cw=svcC.clientWidth, iw=svcs[0].clientWidth+20;
+        svcT.style.transform=`translateX(${(cw-iw)/2 - sIdx*iw}px)`; }
+      pS.addEventListener('click',()=>{ sIdx=(sIdx-1+svcs.length)%svcs.length; updSvc(); });
+      nS.addEventListener('click',()=>{ sIdx=(sIdx+1)%svcs.length; updSvc(); });
       let sX=0; svcC.addEventListener('touchstart',e=>sX=e.touches[0].clientX,{passive:true});
-      svcC.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-sX; if(dx>40) pS.click(); if(dx<-40) nS.click(); });
-      updSvc();
-    });
+      svcC.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-sX;
+        if(dx>40) pS.click(); if(dx<-40) nS.click(); }); updSvc(); });
 
     // INFINITE WHEEL GALLERY LOGIC
-    document.addEventListener("DOMContentLoaded", () => {
-      const C = document.querySelector('.carousel-container');
-      const T = C.querySelector('.carousel-track');
-      let items = Array.from(T.children);
-      const gap = 20;
-      let idx = 1;
-      const p = document.getElementById('prev');
-      const n = document.getElementById('next');
-      function setPos(i, inst=false) {
-        const w = items[i].clientWidth + gap;
-        const off = (C.clientWidth - w)/2 - i*w;
-        if(inst) { T.style.transition='none'; } else { T.style.transition='transform 0.5s ease'; }
-        T.style.transform = `translateX(${off}px)`;
-        if(inst) requestAnimationFrame(()=>T.style.transition='transform 0.5s ease');
-      }
-      T.addEventListener('transitionend', () => {
-        items = Array.from(T.children);
-        if(items[idx].classList.contains('clone')) {
-          idx = idx===0?items.length-2:1;
-          setPos(idx,true);
-        }
-      });
-      function mv(d){ idx=(idx+d+items.length)%items.length; setPos(idx); items.forEach((it,i)=>it.querySelector('.frame').classList.toggle('active',i===idx)); }
+    document.addEventListener("DOMContentLoaded",()=>{
+      const C=document.querySelector('.carousel-container');
+      const T=C.querySelector('.carousel-track');
+      let items=Array.from(T.children), gap=20, idx=1;
+      const p=document.getElementById('prev'), n=document.getElementById('next');
+      function setPos(i, inst=false){ const w=items[i].clientWidth+gap;
+        const off=(C.clientWidth-w)/2 - i*w;
+        T.style.transition=inst?'none':'transform 0.5s ease';
+        T.style.transform=`translateX(${off}px)`;
+        if(inst) requestAnimationFrame(()=>T.style.transition='transform 0.5s ease'); }
+      T.addEventListener('transitionend',()=>{ items=Array.from(T.children);
+        if(items[idx].classList.contains('clone')){ idx=idx===0?items.length-2:1; setPos(idx,true); } });
+      function mv(d){ idx=(idx+d+items.length)%items.length; setPos(idx); items.forEach((it,i)=> 
+        it.querySelector('.frame').classList.toggle('active',i===idx)); }
       p.addEventListener('click',()=>mv(-1)); n.addEventListener('click',()=>mv(1));
       let x0=0; C.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
-      C.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-x0; if(dx>40) p.click(); if(dx<-40) n.click(); });
-      setPos(idx,true);
-      items[idx].querySelector('.frame').classList.add('active');
-    });
+      C.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-x0;
+        if(dx>40) p.click(); if(dx<-40) n.click(); }); setPos(idx,true);
+      items[idx].querySelector('.frame').classList.add('active');});
   </script>
 </body>
 </html>
