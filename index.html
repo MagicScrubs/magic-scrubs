@@ -269,11 +269,12 @@
       const C = document.querySelector(containerSelector);
       if (!C) return;
       const track = C.querySelector(trackClass);
-      const items = Array.from(track.children);
+      let items = Array.from(track.children);
       let idx = 1;
       const prev = document.querySelector(prevSelector);
       const next = document.querySelector(nextSelector);
 
+      // Position helper
       function setPosition(i, instant = false) {
         const cw = C.clientWidth;
         const iw = items[i].clientWidth + 20;
@@ -283,11 +284,16 @@
         if (instant) requestAnimationFrame(() => track.style.transition = 'transform 0.5s ease');
       }
 
+      // Infinite loop reset on transition end
       track.addEventListener('transitionend', () => {
-        const clones = C.querySelectorAll('.clone');
-        clones.forEach(cl => cl.remove());
+        items = Array.from(track.children);
+        if (items[idx].classList.contains('clone')) {
+          idx = idx === 0 ? items.length - 2 : 1;
+          setPosition(idx, true);
+        }
       });
 
+      // Arrow controls
       prev.addEventListener('click', () => {
         idx = (idx - 1 + items.length) % items.length;
         setPosition(idx);
@@ -297,6 +303,7 @@
         setPosition(idx);
       });
 
+      // Swipe support
       let startX = 0;
       C.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
       C.addEventListener('touchend', e => {
@@ -305,10 +312,27 @@
         if (dx < -40) next.click();
       });
 
+      // Initial position
       setPosition(idx, true);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      initCarousel('.services-carousel-container', '#prevService', '#nextService', '.services-track');
+      initCarousel('.carousel-container', '#prev', '#next', '.carousel-track');
+
+      // SCROLL REVEAL
+      document.querySelectorAll('.reveal').forEach(el => {
+        const io = new IntersectionObserver((entries, obs) => {
+          entries.forEach(e => { if (e.isIntersecting) { el.classList.add('active'); obs.unobserve(el); }});
+        }, { threshold: 0.2 });
+        io.observe(el);
+      });
+
+      // NAVBAR SCROLL
+      const navEl = document.querySelector('nav');
+      window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', window.scrollY > 50));
+    });
+('DOMContentLoaded', () => {
       initCarousel('.services-carousel-container', '#prevService', '#nextService', '.services-track');
       initCarousel('.carousel-container', '#prev', '#next', '.carousel-track');
 
