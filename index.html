@@ -8,9 +8,7 @@
     /* GLOBAL RESET & SMOOTH SCROLL */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #007bff;
+    $1#ffffff;
       color: #222;
     }
 
@@ -39,10 +37,7 @@
     nav a:hover { color: #0056b3; }
 
     /* HEADER */
-    header {
-      position: relative;
-      height: 100vh;
-      background: url('images/IMG_5794.jpeg') center/cover no-repeat;
+    $1url('images/IMG_5794.jpeg') center/cover no-repeat;$2
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       color: #fff;
@@ -84,12 +79,17 @@
       flex: 0 0 50%;
       max-width: 50%;
     }
-    /* Text block styling */
+        /* Text block styling */
     .about-subsection > div {
-      background: #fff;
-      color: #222;
+      /* transparent to let blue show through */
+      background: transparent;
+      /* white text on blue background */
+      color: #fff;
       padding: 1rem;
+      /* matching rounded corners */
       border-radius: 8px;
+      flex: 0 0 50%;
+      max-width: 50%;
     }
 
     /* SECTION TITLES */
