@@ -8,7 +8,11 @@
     /* GLOBAL RESET & SMOOTH SCROLL */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', sans-serif; background: #ffffff; color: #222; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #007bff;
+      color: #222;
+    }
 
     /* NAVBAR */
     nav {
@@ -47,13 +51,64 @@
     header h1 { font-size: 4rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     header p { font-size: 1.5rem; margin: .5rem 0; }
 
-    /* SECTION WRAPPER & BORDER EFFECT */
+    /* SECTION WRAPPER — CARD STYLE */
     .section {
-      position: relative; padding: 3rem 1rem; margin: 2rem auto;
-      max-width: 900px; border: 2px solid transparent;
-      border-radius: 8px; transition: border-color 0.4s ease;
+      position: relative;
+      padding: 3rem 1rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
-    .section.border-visible { border-color: #007bff; }
+    
+
+    /* ABOUT SUBSECTION STYLING */
+    .about-subsection {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: #007bff;
+      color: #fff;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    /* Reverse layout for the 1st and 3rd subsections */
+    .about-content > .about-subsection:nth-of-type(odd) {
+      flex-direction: row-reverse;
+    }
+    /* Text block styling */
+    .about-subsection > div {
+      background: #fff;
+      color: #222;
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+    .about-subsection img {
+      flex: 0 0 50%;
+      max-width: 50%;
+      border-radius: 8px;
+    }
+    /* Text block styling */
+    .about-subsection > div {
+      background: #fff;
+      color: #222;
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 1;
+      /* Equal width */
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+    }
+    /* Reverse layout for odd subsections (1st & 3rd) */
+    .about-content .about-subsection:nth-of-type(odd) {
+      flex-direction: row-reverse;
+    }
 
     /* SECTION TITLES */
     section h2 {
@@ -84,6 +139,36 @@
       position: relative; max-width: 800px;
       margin: auto; overflow: hidden; touch-action: pan-y;
     }
+    .services-track {
+      display: flex; gap: 20px;
+      transition: transform 0.5s ease; padding: 20px 0;
+    }
+    .service-item {
+      flex: 0 0 280px; background: #fff;
+      border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .service-item img {
+      width: 100%; border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .service-item h3 {
+      color: #007bff; margin-bottom: .5rem;
+    }
+    .service-item .price {
+      color: #007bff; font-weight: 600;
+      margin-bottom: .75rem;
+    }
+    .service-item p {
+      font-size: .95rem; color: #555;
+      margin-bottom: 1rem;
+    }
+
+    /* Increased spacing separation */
+    #hero { margin-bottom: 4rem; }
+    #services { margin-top: 4rem; }
+
     .services-track {
       display: flex; gap: 20px;
       transition: transform 0.5s ease; padding: 20px 0;
@@ -171,6 +256,10 @@
     .reveal.active {
       opacity: 1; transform: translateY(0);
     }
+      /* Unified corner rounding */
+    .section, .service-item, .frame, .button, .logo-space {
+      border-radius: 16px !important;
+    }
   </style>
 </head>
 <body>
@@ -195,21 +284,45 @@
   <section id="about" class="section reveal">
     <h2>About Us</h2>
     <div class="about-content">
-      <p>At Magic Scrubs, we deliver top-tier mobile car detailing services directly to your doorstep. Our team takes pride in restoring the shine and freshness of every vehicle — inside and out.</p>
-      <h3>What We Do</h3>
-      <p>We offer a full spectrum of services from exterior hand washes and protective wax to deep interior shampooing, leather conditioning, and stain removal.</p>
-      <h3>Our Goal</h3>
-      <p>To exceed expectations with every service, leaving your vehicle looking—and feeling—brand new.</p>
-      <h3>What Is Car Detailing?</h3>
-      <p>Detailing is a comprehensive deep-clean and restoration process that preserves paint, revitalizes interiors, and protects against environmental damage.</p>
-      <h3>Why Get Detailing?</h3>
-      <ul>
-        <li>Protects paint from environmental damage</li>
-        <li>Removes stubborn stains & odors inside</li>
-        <li>Restores showroom-quality shine</li>
-        <li>Helps maintain resale value</li>
-        <li>Personalized care tailored to your vehicle</li>
-      </ul>
+      <p>Magic Scrubs is dedicated to delivering top-tier mobile car detailing services, bringing professional shine and protection directly to your driveway.</p>
+
+      <div class="about-subsection">
+        <img src="images/IMG_5811.jpeg" alt="What We Do" />
+        <div>
+          <h3>What We Do</h3>
+          <p>We offer exterior hand washes, protective wax applications, interior deep-clean shampooing, leather conditioning, and stain removal—meticulously tailored to each vehicle.</p>
+        </div>
+      </div>
+
+      <div class="about-subsection">
+        <img src="images/IMG_5811.jpeg" alt="Our Goal" />
+        <div>
+          <h3>Our Goal</h3>
+          <p>Our mission is to exceed expectations with every detail, leaving each car looking and feeling brand new while providing unmatched convenience and care.</p>
+        </div>
+      </div>
+
+      <div class="about-subsection">
+        <img src="images/IMG_5811.jpeg" alt="What Is Car Detailing" />
+        <div>
+          <h3>What Is Car Detailing?</h3>
+          <p>Car detailing is an in-depth cleaning and restoration process that addresses paint imperfections, interior stains, and protective coatings to preserve value and aesthetics.</p>
+        </div>
+      </div>
+
+      <div class="about-subsection">
+        <img src="images/IMG_5811.jpeg" alt="Why Get Detailing" />
+        <div>
+          <h3>Why Get Detailing?</h3>
+          <ul>
+            <li>Protects paint from environmental damage</li>
+            <li>Eliminates stubborn interior stains & odors</li>
+            <li>Restores showroom-quality shine</li>
+            <li>Enhances resale value</li>
+            <li>Customized care for your vehicle’s needs</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -258,9 +371,29 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="section reveal">
+  <section id="contact" class="section reveal" style="background: #ffffff; color: #222;">
     <h2>Contact Us</h2>
-    <a href="tel:9162887605" class="button">Call 916-288-7605</a>
+    <div class="contact-container" style="max-width:800px; margin:2rem auto; display:grid; grid-template-columns: 120px auto; gap:2rem; align-items:center;">
+      <!-- Logo Placeholder -->
+      <div class="logo-space" style="width: 120px; height: 120px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 1.1rem;">
+        Logo
+      </div>
+      <!-- Contact Methods with Icon-style Buttons -->
+      <div class="contact-methods" style="display: flex; flex-direction: column; gap: 1rem;">
+        <a href="mailto:magicscrubs@example.com" class="button" style="background: #007bff; color: #fff; display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
+          📧 Email: magicscrubs
+        </a>
+        <a href="https://instagram.com/magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
+          📷 Instagram: @magicscrubs
+        </a>
+        <a href="https://tiktok.com/@magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
+          🎵 TikTok: @magicscrubs
+        </a>
+        <a href="https://facebook.com/magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
+          👍 Facebook: Magic Scrubs
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
