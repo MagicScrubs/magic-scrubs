@@ -73,10 +73,9 @@
       padding: 1.5rem;
       margin: 2rem 0;
       border-radius: 16px;
-      flex-wrap: wrap;
-    }
-        /* 1st & 3rd blocks: image on right */
-    .about-subsection:nth-of-type(odd) {
+      flex-wrap: nowrap;}
+        /* Reverse layout via class */
+    .about-subsection.reverse {
       flex-direction: row-reverse;
     }
     /* Equal split for image and text */
@@ -269,7 +268,7 @@
     <div class="about-content">
       <p>Magic Scrubs is dedicated to delivering top-tier mobile car detailing services, bringing professional shine and protection directly to your driveway.</p>
 
-      <div class="about-subsection">
+      <div class="about-subsection reverse">
         <img src="images/IMG_5811.jpeg" alt="What We Do" />
         <div>
           <h3>What We Do</h3>
@@ -285,7 +284,7 @@
         </div>
       </div>
 
-      <div class="about-subsection">
+      <div class="about-subsection reverse">
         <img src="images/IMG_5811.jpeg" alt="What Is Car Detailing" />
         <div>
           <h3>What Is Car Detailing?</h3>
