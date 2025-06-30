@@ -72,26 +72,18 @@
       color: #fff;
       padding: 1.5rem;
       margin: 2rem 0;
-      border-radius: 8px;
+      border-radius: 16px;
       flex-wrap: wrap;
     }
-    /* Reverse layout for the 1st and 3rd subsections */
+    /* 1st & 3rd blocks: image on right */
     .about-content > .about-subsection:nth-of-type(odd) {
       flex-direction: row-reverse;
     }
-    /* Text block styling */
+    /* Equal split for image and text */
+    .about-subsection img,
     .about-subsection > div {
-      background: #fff;
-      color: #222;
-      padding: 1rem;
-      border-radius: 8px;
       flex: 0 0 50%;
       max-width: 50%;
-    }
-    .about-subsection img {
-      flex: 0 0 50%;
-      max-width: 50%;
-      border-radius: 8px;
     }
     /* Text block styling */
     .about-subsection > div {
@@ -99,15 +91,6 @@
       color: #222;
       padding: 1rem;
       border-radius: 8px;
-      flex: 1;
-      /* Equal width */
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-    }
-    /* Reverse layout for odd subsections (1st & 3rd) */
-    .about-content .about-subsection:nth-of-type(odd) {
-      flex-direction: row-reverse;
     }
 
     /* SECTION TITLES */
