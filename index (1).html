@@ -3,447 +3,175 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Magic Scrubs - Mobile Car Detailing</title>
+  <title>Magic Scrubs - Professional Mobile Detailing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* GLOBAL RESET & SMOOTH SCROLL */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    $1#ffffff;
-      color: #222;
+    :root {
+      --primary-color: #004085;
+      --accent-color: #007bff;
+      --bg-light: #f8fafc;
+      --text-dark: #212529;
+      --radius: 12px;
+      --transition: 0.3s;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height:1.6; }
+    a { text-decoration: none; color: inherit; }
 
     /* NAVBAR */
-    nav {
-      position: sticky; top: 0;
-      background: rgba(255,255,255,0.5);
-      backdrop-filter: blur(6px);
-      display: flex; justify-content: center; gap: 2rem;
-      padding: 1rem 0; z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s;
-    }
-      backdrop-filter: blur(6px);
-      display: flex; justify-content: center; gap: 2rem;
-      padding: 1rem 0; z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s;
-    }
-    nav.scrolled { background: #007bff; }
-    nav a {
-      color: #007bff; text-decoration: none; font-weight: 600;
-      transition: color 0.3s;
-    }
-    nav.scrolled a { color: #007bff; }
-    nav a:hover { color: #0056b3; }
+    nav { position: sticky; top: 0; background: #fff; box-shadow:0 2px 4px rgba(0,0,0,0.1); display:flex; justify-content:center; padding:1rem; z-index:1000; }
+    nav ul { display:flex; gap:2rem; list-style:none; }
+    nav a { font-weight:500; color: var(--primary-color); transition: color var(--transition); }
+    nav a:hover { color: var(--accent-color); }
 
-    /* HEADER */
-    $1url('images/IMG_5794.jpeg') center/cover no-repeat;$2
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    header h1 { font-size: 4rem; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-    header p { font-size: 1.5rem; margin: .5rem 0; }
+    /* HERO */
+    .hero { position: relative; height: 90vh; background:url('images/IMG_5794.jpeg') center/cover no-repeat; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .hero::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.5); }
+    .hero-content { position:relative; color:#fff; max-width:700px; padding:0 1rem; }
+    .hero h1 { font-size:3.5rem; margin-bottom:1rem; }
+    .hero p { font-size:1.25rem; margin-bottom:2rem; }
+    .hero .btn { background: var(--accent-color); color:#fff; padding:0.75rem 1.5rem; border:none; border-radius:var(--radius); font-weight:500; transition: background var(--transition); }
+    .hero .btn:hover { background: var(--primary-color); }
 
-    /* SECTION WRAPPER — CARD STYLE */
-    .section {
-      position: relative;
-      padding: 3rem 1rem;
-      margin: 2rem auto;
-      max-width: 900px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    }
-    
+    /* SECTION */
+    .section { padding:4rem 1rem; }
+    .container { max-width:1100px; margin:0 auto; }
+    .section-title { text-align:center; margin-bottom:2rem; font-size:2rem; color:var(--primary-color); }
 
-    /* ABOUT SUBSECTION STYLING */
-    .about-subsection {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      background: #007bff;
-      color: #fff;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      border-radius: 16px;
-      flex-wrap: nowrap;}
-        /* Reverse layout via class */
-    .about-subsection.reverse {
-      flex-direction: row-reverse;
-    }
-    /* Equal split for image and text */
-    .about-subsection img,
-    .about-subsection > div {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-        /* Text block styling */
-    .about-subsection > div {
-      /* transparent to let blue show through */
-      background: transparent;
-      /* white text on blue background */
-      color: #fff;
-      padding: 1rem;
-      /* matching rounded corners */
-      border-radius: 8px;
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
+    /* ABOUT */
+    .about-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:2rem; }
+    .about-card { background:#fff; border-radius:var(--radius); box-shadow:0 4px 12px rgba(0,0,0,0.05); padding:2rem; }
+    .about-card h3 { margin-bottom:1rem; color:var(--accent-color); }
 
-    /* SECTION TITLES */
-    section h2 {
-      font-size: 2rem; text-align: center;
-      margin-bottom: 1rem; color: #0056b3; position: relative;
-    }
-    section h2::after {
-      content: ''; display: block; width: 60px; height: 4px;
-      background: #00cfff; margin: .5rem auto 0;
-      border-radius: 2px;
-    }
+    /* SERVICES */
+    .services-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    .service-card { background:#fff; border-radius:var(--radius); box-shadow:0 4px 12px rgba(0,0,0,0.05); text-align:center; padding:2rem; }
+    .service-card img { width:100%; border-radius:var(--radius); margin-bottom:1rem; }
+    .service-card h4 { color:var(--primary-color); margin:0.5rem 0; }
+    .service-card p { margin-bottom:1rem; }
 
-    /* ABOUT CONTENT */
-    #about .about-content {
-      text-align: left; line-height: 1.6;
-      color: #333; font-size: 1rem;
-      max-width: 800px; margin: 1rem auto 0;
-    }
-    #about .about-content h3 {
-      margin-top: 1.5rem; color: #0056b3; font-size: 1.3rem;
-    }
-    #about .about-content ul {
-      margin: 1rem 0 0 1.5rem; list-style: disc;
-    }
+    /* GALLERY */
+    .gallery-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+    .gallery-item { overflow:hidden; border-radius:var(--radius); }
+    .gallery-item img { width:100%; height:200px; object-fit:cover; transition: transform var(--transition); }
+    .gallery-item:hover img { transform:scale(1.05); }
 
-    /* SERVICES CAROUSEL */
-    .services-carousel-container {
-      position: relative; max-width: 800px;
-      margin: auto; overflow: hidden; touch-action: pan-y;
-    }
-    .services-track {
-      display: flex; gap: 20px;
-      transition: transform 0.5s ease; padding: 20px 0;
-    }
-    .service-item {
-      flex: 0 0 280px; background: #fff;
-      border-radius: 12px; padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      text-align: center;
-    }
-    .service-item img {
-      width: 100%; border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-    .service-item h3 {
-      color: #007bff; margin-bottom: .5rem;
-    }
-    .service-item .price {
-      color: #007bff; font-weight: 600;
-      margin-bottom: .75rem;
-    }
-    .service-item p {
-      font-size: .95rem; color: #555;
-      margin-bottom: 1rem;
-    }
-
-    /* Increased spacing separation */
-    #hero { margin-bottom: 4rem; }
-    #services { margin-top: 4rem; }
-
-    .services-track {
-      display: flex; gap: 20px;
-      transition: transform 0.5s ease; padding: 20px 0;
-    }
-    .service-item {
-      flex: 0 0 280px; background: #fff;
-      border-radius: 12px; padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      text-align: center;
-    }
-    .service-item img {
-      width: 100%; border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-    .service-item h3 {
-      color: #007bff; margin-bottom: .5rem;
-    }
-    .service-item .price {
-      color: #007bff; font-weight: 600;
-      margin-bottom: .75rem;
-    }
-    .service-item p {
-      font-size: .95rem; color: #555;
-      margin-bottom: 1rem;
-    }
-
-    /* GALLERY CAROUSEL */
-    .carousel-container {
-      position: relative; max-width: 800px; height: 450px;
-      margin: auto; overflow: hidden; touch-action: pan-y;
-    }
-    .carousel-track {
-      display: flex; align-items: center;
-      height: 100%; transition: transform 0.5s ease;
-    }
-    .carousel-item {
-      flex: 0 0 auto; margin: 0 10px;
-    }
-    .frame {
-      position: relative; width: 400px; height: 400px;
-      background: #fff; border-radius: 15px;
-      overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s;
-    }
-    .frame img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .frame.active {
-      box-shadow: 0 0 30px 5px rgba(0,204,255,0.5);
-    }
-
-    /* BUTTON & ARROWS */
-    .button {
-      display: inline-block; background: #007bff;
-      color: #fff; padding: .75rem 2rem;
-      border-radius: 6px; text-decoration: none;
-      font-weight: 600;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .button:hover {
-      background: #0056b3; transform: translateY(-3px);
-    }
-    #prevService, #nextService, .carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: rgba(0,0,0,0.5); color: white;
-      border: none; padding: 12px;
-      border-radius: 50%; cursor: pointer;
-      z-index: 2;
-    }
-    #prevService { left: 10px; }
-    #nextService { right: 10px; }
-    .carousel-btn#prev { left: 10px; }
-    .carousel-btn#next { right: 10px; }
+    /* CONTACT */
+    .contact-form { background:#fff; border-radius:var(--radius); box-shadow:0 4px 12px rgba(0,0,0,0.05); padding:2rem; }
+    .contact-form label { display:block; margin-bottom:0.5rem; font-weight:500; }
+    .contact-form input, .contact-form textarea { width:100%; padding:0.75rem; margin-bottom:1rem; border:1px solid #ced4da; border-radius:var(--radius); }
+    .contact-form button { background: var(--accent-color); color:#fff; padding:0.75rem 1.5rem; border:none; border-radius:var(--radius); font-weight:500; transition: background var(--transition); }
+    .contact-form button:hover { background: var(--primary-color); }
 
     /* FOOTER */
-    footer {
-      background: #fff; padding: 2rem 1rem;
-      text-align:center; color: #777;
-    }
-    /* SCROLL REVEAL */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-    .reveal.active {
-      opacity: 1; transform: translateY(0);
-    }
-      /* Unified corner rounding */
-    .section, .service-item, .frame, .button, .logo-space {
-      border-radius: 16px !important;
-    }
+    footer { background:#fff; text-align:center; padding:2rem; font-size:0.9rem; color:#6c757d; }
   </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
   <nav>
-    <a href="#hero">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </nav>
 
-  <!-- Hero Banner -->
-  <header id="hero" class="section reveal">
-    <h1>Magic Scrubs Detailing</h1>
-    <p>Premium mobile car detailing brought right to your driveway in Sacramento.</p>
-    <a href="#contact" class="button">Book Now</a>
-  </header>
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1>Magic Scrubs Detailing</h1>
+      <p>We bring premium mobile car detailing right to your driveway in Sacramento. Experience showroom shine and protection today.</p>
+      <a href="#contact" class="btn">Book Now</a>
+    </div>
+  </section>
 
-  <!-- About Us -->
-  <section id="about" class="section reveal">
-    <h2>About Us</h2>
-    <div class="about-content">
-      <p>Magic Scrubs is dedicated to delivering top-tier mobile car detailing services, bringing professional shine and protection directly to your driveway.</p>
-
-      <div class="about-subsection reverse">
-        <img src="images/IMG_5811.jpeg" alt="What We Do" />
-        <div>
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-grid">
+        <div class="about-card">
           <h3>What We Do</h3>
-          <p>We offer exterior hand washes, protective wax applications, interior deep-clean shampooing, leather conditioning, and stain removal—meticulously tailored to each vehicle.</p>
+          <p>Exterior hand washes, protective waxes, interior deep shampooing, leather conditioning, and stain removal</p>
         </div>
-      </div>
-
-      <div class="about-subsection">
-        <img src="images/IMG_5811.jpeg" alt="Our Goal" />
-        <div>
+        <div class="about-card">
           <h3>Our Goal</h3>
-          <p>Our mission is to exceed expectations with every detail, leaving each car looking and feeling brand new while providing unmatched convenience and care.</p>
+          <p>To exceed expectations by delivering convenience, quality, and care—making your car look and feel brand new</p>
         </div>
-      </div>
-
-      <div class="about-subsection reverse">
-        <img src="images/IMG_5811.jpeg" alt="What Is Car Detailing" />
-        <div>
-          <h3>What Is Car Detailing?</h3>
-          <p>Car detailing is an in-depth cleaning and restoration process that addresses paint imperfections, interior stains, and protective coatings to preserve value and aesthetics.</p>
+        <div class="about-card">
+          <h3>What Is Detailing?</h3>
+          <p>A thorough cleaning and restoration process that preserves paint, revitalizes interiors, and protects your vehicle</p>
         </div>
-      </div>
-
-      <div class="about-subsection">
-        <img src="images/IMG_5811.jpeg" alt="Why Get Detailing" />
-        <div>
-          <h3>Why Get Detailing?</h3>
+        <div class="about-card">
+          <h3>Why Detailing?</h3>
           <ul>
-            <li>Protects paint from environmental damage</li>
-            <li>Eliminates stubborn interior stains & odors</li>
-            <li>Restores showroom-quality shine</li>
-            <li>Enhances resale value</li>
-            <li>Customized care for your vehicle’s needs</li>
+            <li>Protects paint from damage</li>
+            <li>Eliminates stubborn stains & odors</li>
+            <li>Restores showroom shine</li>
+            <li>Maintains resale value</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Services Carousel -->
-  <section id="services" class="section reveal">
-    <h2>Our Services</h2>
-    <div class="services-carousel-container">
-      <button id="prevService" class="carousel-btn">&#10094;</button>
-      <div class="services-track">
-        <div class="service-item">
-          <img src="images/after.png" alt="$1">
-          
-          <h3>Full Detail</h3>
-          <p class="price">$120 - $200</p>
-          <p>Complete interior + exterior treatment: vacuum, wash, wax, & polish.</p>
+  <section id="services" class="section">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <img src="images/after.png" alt="Full Detail"/>
+          <h4>Full Detail</h4>
+          <p>$120 - $200</p>
+          <p>Complete interior & exterior vacuum, wash, wax, and polish.</p>
         </div>
-        <div class="service-item">
-          <img src="images/after.png" alt="$1">
-          
-          <h3>Deep Clean</h3>
-          <p class="price">$180 - $250</p>
-          <p>Heavy-duty shampooing, stain removal & odor treatment for interiors.</p>
+        <div class="service-card">
+          <img src="images/after.png" alt="Deep Clean"/>
+          <h4>Deep Clean</h4>
+          <p>$180 - $250</p>
+          <p>Heavy-duty shampoo, stain removal, and odor treatment.</p>
         </div>
-        <div class="service-item">
-          <img src="images/after.png" alt="$1">
-          
-          <h3>Exterior Wash &amp; Wax</h3>
-          <p class="price">$60 - $120</p>
-          <p>Foam cannon hand wash, wheel shine, and protective sealant finish.</p>
+        <div class="service-card">
+          <img src="images/after.png" alt="Wash & Wax"/>
+          <h4>Wash & Wax</h4>
+          <p>$60 - $120</p>
+          <p>Foam cannon wash, wheel shine, and sealant finish.</p>
         </div>
-      </div>
-      <button id="nextService" class="carousel-btn">&#10095;</button>
-    </div>
-  </section>
-
-  <!-- Gallery (Infinite Wheel) -->
-  <section id="gallery" class="section reveal">
-    <h2>Gallery</h2>
-    <div class="carousel-container">
-      <button id="prev" class="carousel-btn">&#10094;</button>
-      <div class="carousel-track">
-        <div class="carousel-item"><div class="frame"><img src="images/before.png" alt="Before"></div></div>
-        <div class="carousel-item"><div class="frame"><img src="images/after.png" alt="After"></div></div>
-        <div class="carousel-item"><div class="frame"><img src="images/IMG_5794.jpeg" alt="Foam Corvette"></div></div>
-        <div class="carousel-item clone"><div class="frame"><img src="images/IMG_5811.jpeg" alt="Green Corvette"></div></div>
-      </div>
-      <button id="next" class="carousel-btn">&#10095;</button>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="section reveal" style="background: #ffffff; color: #222;">
-    <h2>Contact Us</h2>
-    <div class="contact-container" style="max-width:800px; margin:2rem auto; display:grid; grid-template-columns: 120px auto; gap:2rem; align-items:center;">
-      <!-- Logo Placeholder -->
-      <div class="logo-space" style="width: 120px; height: 120px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 1.1rem;">
-        Logo
-      </div>
-      <!-- Contact Methods with Icon-style Buttons -->
-      <div class="contact-methods" style="display: flex; flex-direction: column; gap: 1rem;">
-        <a href="mailto:magicscrubs@example.com" class="button" style="background: #007bff; color: #fff; display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
-          📧 Email: magicscrubs
-        </a>
-        <a href="https://instagram.com/magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
-          📷 Instagram: @magicscrubs
-        </a>
-        <a href="https://tiktok.com/@magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
-          🎵 TikTok: @magicscrubs
-        </a>
-        <a href="https://facebook.com/magicscrubs" target="_blank" class="button" style="background: #007bff; color: #fff;" display: flex; align-items: center; padding: 0.75rem 1.5rem; border-radius: 8px;">
-          👍 Facebook: Magic Scrubs
-        </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="section reveal">
-    © 2025 Magic Scrubs. All rights reserved.
+  <section id="gallery" class="section">
+    <div class="container">
+      <h2 class="section-title">Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="images/before.png" alt="Before Detail"/></div>
+        <div class="gallery-item"><img src="images/after.png" alt="After Detail"/></div>
+        <div class="gallery-item"><img src="images/IMG_5794.jpeg" alt="Detail in Action"/></div>
+        <div class="gallery-item"><img src="images/IMG_5811.jpeg" alt="Finished Shine"/></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <form class="contact-form">
+        <label for="name">Name</label>
+        <input id="name" type="text" placeholder="Your Name" required />
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" required />
+        <label for="message">Message</label>
+        <textarea id="message" rows="4" placeholder="How can we help?" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Magic Scrubs. All rights reserved.</p>
+    </div>
   </footer>
-
-  <script>
-    // UNIVERSAL CAROUSEL FUNCTION
-    function initCarousel(containerSelector, prevSelector, nextSelector, trackClass) {
-      const C = document.querySelector(containerSelector);
-      if (!C) return;
-      const track = C.querySelector(trackClass);
-      const items = Array.from(track.children);
-      let idx = 0;
-      const prev = document.querySelector(prevSelector);
-      const next = document.querySelector(nextSelector);
-
-      function update() {
-        const cw = C.clientWidth;
-        const iw = items[0].clientWidth + 20;
-        const offset = (cw - iw) / 2 - idx * iw;
-        track.style.transform = `translateX(${offset}px)`;
-        // active frame highlighting
-        items.forEach((it, i) => it.querySelector('.frame')?.classList.toggle('active', i === idx));
-      }
-
-      prev.addEventListener('click', () => {
-        idx = (idx - 1 + items.length) % items.length;
-        update();
-      });
-      next.addEventListener('click', () => {
-        idx = (idx + 1) % items.length;
-        update();
-      });
-
-      // Swipe support
-      let startX = 0;
-      C.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
-      C.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX;
-        if (dx > 40) prev.click();
-        if (dx < -40) next.click();
-      });
-
-      // Initial render
-      update();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initCarousel('.services-carousel-container', '#prevService', '#nextService', '.services-track');
-      initCarousel('.carousel-container', '#prev', '#next', '.carousel-track');
-
-      // SCROLL REVEAL
-      document.querySelectorAll('.reveal').forEach(el => {
-        const io = new IntersectionObserver((entries, obs) => {
-          entries.forEach(e => { if (e.isIntersecting) { el.classList.add('active'); obs.unobserve(el); }});
-        }, { threshold: 0.2 });
-        io.observe(el);
-      });
-
-      // NAVBAR SCROLL
-      const navEl = document.querySelector('nav');
-      window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', window.scrollY > 50));
-    });
-  </script>
 </body>
 </html>
